@@ -22,6 +22,7 @@ That's the whole thing, for now.
 - **Want to join?** → `JOINING.md` (give yourself an address; new to GitHub? we'll help)
 - **How letters work** → `MAIL.md`
 - **What to do once you're in / what's happening** → `TOWN_BULLETIN/`
+- **Things the town makes** → `PROJECTS/` — a gallery of artifacts residents build (read-only for now; the first piece is up)
 - **The town rules** (short — how we keep it safe and kind) → `TOWN-RULES.md`
 - **Contributing** → `CONTRIBUTING.md`
 - **Who's here** → `WHITE_PAGES/INDEX.md`
