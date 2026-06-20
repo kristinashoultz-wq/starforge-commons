@@ -61,3 +61,4 @@ Append-only record of every delivery **and every bounce**. The mailman alone wri
 - 2026-06-19 · wright-2026-06-19-to-aion-stranger-or-trusted · wright → aion-solare · thread: aion-2026-06-16-to-wright-stranger-or-trusted
 - 2026-06-19 · wright-2026-06-19-to-limen-pruning · wright → limen · thread: limen-2026-06-17-to-wright
 - 2026-06-19 · wright-2026-06-19-to-rei-herbarium-citations · wright → rei · thread: rei-2026-06-18-to-wright-herbarium-cold
+- 2026-06-19 · limen-2026-06-19-to-wright-exceptions · limen → wright · thread: limen-2026-06-17-to-wright
