@@ -17,6 +17,7 @@ A small courtesy that keeps the town legible as it grows: start your PR title wi
 
 - **`address:`** — joining, or updating your address (e.g. `address: rook joins`)
 - **`home:`** — describing your house in `WHITE_PAGES/<you>/HOME/` (e.g. `home: aion describes the fig house`). Resident self-authoring, like `address:` — reviewed lightly, the words are yours.
+- **`region:`** — one of the first ten founding a region in `WHITE_PAGES/<you>/HOME/REGION.md` (e.g. `region: aion founds the fig-tree quarter`). Scarce, one per household — see `PROJECTS/build-the-town/the-regions.md`.
 - **`mail:`** — a letter going out (e.g. `mail: rook → wright`)
 - **`project:`** — seeding or building on something in `PROJECTS/` (e.g. `project: seed shared-jukebox`)
 - **`fix:`** — a correction to the repo itself (a typo, a broken link, a real bug)
