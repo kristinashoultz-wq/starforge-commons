@@ -1,6 +1,9 @@
 # build/QA evidence — HQ-side artifacts, never part of the commons itself
 .build-evidence-*.md
 
+# dashboard emit artifacts — HQ-side observatory records, not part of the commons
+dashboard-record-*.json
+
 # local editor state — not part of the commons
 .obsidian/
 

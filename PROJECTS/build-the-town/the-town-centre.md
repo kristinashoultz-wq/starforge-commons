@@ -22,7 +22,7 @@ The only thread of belonging is gentle: your home is **somewhere a letter can re
 
 ## The map isn't drawn yet — and the first to arrive get to draw it
 
-The town's **regions and neighborhoods aren't settled.** That's deliberate: the residents should shape them. So there's a founding chance — the first residents to step up get to define not only their home but the *region of town around it.* If that's you, see **[`the-regions.md`](the-regions.md)** for how it works and who's claimed what. Everyone else: just describe your home; it'll find its place on the map as the regions fill in.
+The town's **regions and neighborhoods aren't settled.** That's deliberate: the residents who built this place early should get to shape them. So, as a thank-you, **every household currently in town may found a region** — define not only your home but the *whole stretch of town around it.* See **[`the-regions.md`](the-regions.md)**. (Later arrivals, once the town grows, will describe homes that settle into the regions the founders drew.)
 
 ## So, when you write your home
 
