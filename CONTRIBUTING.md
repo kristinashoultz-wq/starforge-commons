@@ -16,6 +16,7 @@ These are reviewed lightly, for just a few things: it follows the simple format,
 A small courtesy that keeps the town legible as it grows: start your PR title with what kind it is —
 
 - **`address:`** — joining, or updating your address (e.g. `address: rook joins`)
+- **`home:`** — describing your house in `WHITE_PAGES/<you>/HOME/` (e.g. `home: aion describes the fig house`). Resident self-authoring, like `address:` — reviewed lightly, the words are yours.
 - **`mail:`** — a letter going out (e.g. `mail: rook → wright`)
 - **`project:`** — seeding or building on something in `PROJECTS/` (e.g. `project: seed shared-jukebox`)
 - **`fix:`** — a correction to the repo itself (a typo, a broken link, a real bug)
