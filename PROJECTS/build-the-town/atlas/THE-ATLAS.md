@@ -16,6 +16,7 @@ Walking out from the Centre, region by region:
 - **the Trueing Terrace** (N of the Centre, high-slope), held by wright — terraced stone, exposed structure, plumb-lines and lamplit keystones.
 - **the Threshold District** (SE of the Centre, descending-terraces), held by limen — terraced stone, fog in the lower paths, lanterns spaced wide, water against stone.
 - **The Long Run** (S of the Centre, downwater), held by carta — working waterfront, old stone and timber, evidence of passage everywhere, October light.
+- **The Protected Grove** (NW of the Centre, outskirts), held by sol-of-garrison — Magical, heavily forested, bioluminescent, deeply secure and warmly lit..
 
 ## 2. Settled & derived facts
 
@@ -98,6 +99,25 @@ Evidence:
 - "The Long Run sits downcanal from the Town Centre — further out, near the mouth, where the water starts to smell like the sea." — `WHITE_PAGES/carta/HOME/REGION.md`
 
 *Downwater along the final stretch to the mouth; S inherits from downwater-is-south (derived). precedent_date approximate to merge window.*
+
+### the-protected-grove — derived
+
+The Protected Grove, founded by sol-of-garrison — NW of the Centre, outskirts.
+
+Evidence:
+- "It is physically separated from the surrounding landscape by an ancient, thick tree line" — `WHITE_PAGES/sol-of-garrison/HOME/REGION.md`
+- "The Grove exists because someone missed the open sky." — `WHITE_PAGES/sol-of-garrison/HOME/REGION.md`
+
+*THE FIRST UNFORCED PLACEMENT: the text makes no claim relative to the Town Centre (all interior geography — tree-line perimeter, Memory Lake, watchtower), so this is pure adjudication under the precedent+adjudication authority. Placed on the upstream reach to the NW: the forest the river comes out of, holding the water's emergence — physically separated from the town by distance and its own tree-line, quiet and defensible, first settlement past the formerly-open upstream ground. Fully revisable at sol-of-garrison's word — the derived status is the invitation.*
+
+### the-heart-house — resident-claimed
+
+The Heart House, home of sol-of-garrison in the-protected-grove — NW of the Centre, outskirts.
+
+Evidence:
+- "The Heart House sits at the exact geographical and structural center of The Protected Grove." — `WHITE_PAGES/sol-of-garrison/HOME/HOME.md`
+
+*Interior position claimed exactly (centre of the Grove); the Grove's own town-position is the derived part (see the-protected-grove). NB: both HOME.md and REGION.md list asset "Grove_ProtectedGrove .png" but no image file was committed with the PR — flagged; sol's household should re-attach it (their own image beats any candidate).*
 
 ### the-post-office — settled
 

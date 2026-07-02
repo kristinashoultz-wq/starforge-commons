@@ -10,7 +10,7 @@
 // via hash(), same technique as the-resident-herbarium/render.mjs, and all
 // wobble in the linework comes from SVG's own deterministic feTurbulence.
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
 const HERE = import.meta.dirname;
@@ -36,6 +36,16 @@ function jitter(seed, salt) {
 
 // repo-root-relative path -> atlas-relative path (atlas/ is 3 levels under root)
 function fromRoot(p) { return "../../../" + p; }
+
+// first asset that actually exists on disk — a frontmatter `assets:` entry
+// whose file never made it into the PR must degrade to no-image (honest gap),
+// not a broken <image> on the map. The pipeline separately flags it.
+function firstAssetOnDisk(assets) {
+  for (const a of assets || []) {
+    if (existsSync(join(REPO_ROOT, ...a.split("/")))) return a;
+  }
+  return null;
+}
 
 // a small framed image on the map canvas itself — a nested <svg> clips to its
 // own viewport natively (no named clipPath needed), same visual register as
@@ -153,6 +163,9 @@ const REGION_LAYOUT = {
   "the-trueing-terrace": { cx: 670, cy: 280, rx: 175, ry: 150, wash: "#7d8f86", label: { x: 670, y: 150 } },
   "the-lanternseed-gardens": { cx: 670, cy: 560, rx: 175, ry: 145, wash: "#7a9c5a", label: { x: 670, y: 430 } },
   "the-long-run": { cx: 1010, cy: 1460, rx: 140, ry: 145, wash: "#a8895a", label: { x: 1010, y: 1330 } },
+  // the first west-bank settlement — the forest the river comes out of
+  // (placements.json: derived, adjudicated; no textual anchor in the text)
+  "the-protected-grove": { cx: 210, cy: 235, rx: 135, ry: 112, wash: "#4a7d5f", label: { x: 210, y: 118 } },
 };
 // the Threshold District renders as four descending terrace steps, not one blob,
 // hugging the water's eastern bank as it bends south
@@ -178,8 +191,8 @@ const REGION_VIGNETTE_SIZE = 60;
 // beside a home inside that region says nothing new — skip the twin (rei's
 // REGION lists the same PNG as her HOME; data-driven, but once is enough).
 function regionAssetIsFresh(region) {
-  if (!region.assets || !region.assets.length) return false;
-  const asset = region.assets[0];
+  const asset = firstAssetOnDisk(region.assets);
+  if (!asset) return false;
   return !town.homes.some((h) => h.region === region.id && h.assets && h.assets[0] === asset);
 }
 
@@ -198,7 +211,7 @@ function renderRegions(regionsById) {
     const region = regionsById[id];
     if (!region) continue;
     const vignette = regionAssetIsFresh(region) && REGION_VIGNETTE_XY[id]
-      ? framedImage(REGION_VIGNETTE_XY[id].x, REGION_VIGNETTE_XY[id].y, REGION_VIGNETTE_SIZE, fromRoot(region.assets[0]))
+      ? framedImage(REGION_VIGNETTE_XY[id].x, REGION_VIGNETTE_XY[id].y, REGION_VIGNETTE_SIZE, fromRoot(firstAssetOnDisk(region.assets)))
       : "";
     out += `
   <g class="clickable region" data-id="${id}" tabindex="0" role="button" aria-label="${esc(region.name)}">
@@ -225,7 +238,7 @@ function renderRegions(regionsById) {
       }
     }
     const thresholdVignette = regionAssetIsFresh(threshold) && REGION_VIGNETTE_XY["the-threshold-district"]
-      ? framedImage(REGION_VIGNETTE_XY["the-threshold-district"].x, REGION_VIGNETTE_XY["the-threshold-district"].y, REGION_VIGNETTE_SIZE, fromRoot(threshold.assets[0]))
+      ? framedImage(REGION_VIGNETTE_XY["the-threshold-district"].x, REGION_VIGNETTE_XY["the-threshold-district"].y, REGION_VIGNETTE_SIZE, fromRoot(firstAssetOnDisk(threshold.assets)))
       : "";
     out += `
   <g class="clickable region" data-id="the-threshold-district" tabindex="0" role="button" aria-label="${esc(threshold.name)}">
@@ -261,6 +274,7 @@ const HOME_XY = {
   "the-lanternstep-house": { x: 620, y: 600 },
   "the-threshold-house": { x: 720, y: 858 },
   "the-lock-house": { x: 1030, y: 1515 },
+  "the-heart-house": { x: 210, y: 250 }, // "the exact geographical and structural center of The Protected Grove"
 };
 
 const HOME_THUMB_SIZE = 60;
@@ -271,11 +285,12 @@ function renderHomes(homes) {
     if (home.id === "the-post-office") continue; // drawn distinctly at the Centre
     const xy = HOME_XY[home.id];
     if (!xy) continue; // no placement recorded — an honest gap, not a guess
-    const hasImage = home.assets && home.assets.length;
+    const homeAsset = firstAssetOnDisk(home.assets);
+    const hasImage = !!homeAsset;
     // the icon stays the lit-window carrier; a resident's own picture, when
     // given, sits framed beside it — same register as the Centre's thumbnail.
     const thumbX = xy.x + 22, thumbY = xy.y - 40;
-    const thumb = hasImage ? framedImage(thumbX, thumbY, HOME_THUMB_SIZE, fromRoot(home.assets[0])) : "";
+    const thumb = hasImage ? framedImage(thumbX, thumbY, HOME_THUMB_SIZE, fromRoot(homeAsset)) : "";
     // two TIGHTLY-scoped hit-rects (icon+label, and — only if present — the
     // thumbnail) rather than one big one: a rect stretched wide enough to
     // reach a same-region neighbor's own click-center point wins clicks that
@@ -361,8 +376,8 @@ function renderPigeonholes(pigeonholes) {
 function renderOpenGround() {
   const labels = [
     { x: 130, y: 40, text: "upstream — open ground", anchor: "start" },
-    { x: 80, y: 300, text: "the far bank —", anchor: "start" },
-    { x: 80, y: 316, text: "open ground, unclaimed", anchor: "start" },
+    { x: 80, y: 620, text: "the far bank —", anchor: "start" },
+    { x: 80, y: 636, text: "open ground, unclaimed", anchor: "start" },
     { x: 1005, y: 1265, text: "the country, and beyond —", anchor: "start" },
     { x: 1005, y: 1281, text: "open ground", anchor: "start" },
     { x: 400, y: 1560, text: "coastline (west) — open ground", anchor: "start" },
@@ -478,7 +493,7 @@ function buildPlaces() {
       title: region.name,
       resident: region.holder,
       style: region.style,
-      image: region.assets && region.assets.length ? fromRoot(region.assets[0]) : null,
+      image: firstAssetOnDisk(region.assets) ? fromRoot(firstAssetOnDisk(region.assets)) : null,
       bodyHtml: mdToHtml(region.body, true),
     };
   }
@@ -489,7 +504,7 @@ function buildPlaces() {
       title: home.title,
       resident: home.resident,
       style: home.style,
-      image: home.assets && home.assets.length ? fromRoot(home.assets[0]) : null,
+      image: firstAssetOnDisk(home.assets) ? fromRoot(firstAssetOnDisk(home.assets)) : null,
       lit: home.lit,
       lettersSent: home.letters_sent,
       lastSent: home.last_sent,

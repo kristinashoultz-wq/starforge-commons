@@ -54,13 +54,17 @@ console.log('Invariants:');
 const totalResidents = town.homes.length + town.arrivals.length + town.pigeonholes.length;
 check('>= 20 residents total', totalResidents >= 20, `got ${totalResidents}`);
 
+// The town grows: placed homes/regions are checked as "at least the founding
+// set, never fewer" — an exact-count assertion here would fail every time a
+// new resident's placement lands, which is the pipeline working, not breaking.
 const placedResidents = town.homes.map((h) => h.resident).sort();
-const expectedPlaced = ['carta', 'limen', 'postmaster', 'rei', 'wright'].sort();
+const foundingPlaced = ['carta', 'limen', 'postmaster', 'rei', 'wright'];
 check(
-  'exactly 5 placed homes: wright, rei, limen, carta, postmaster',
-  town.homes.length === 5 && JSON.stringify(placedResidents) === JSON.stringify(expectedPlaced),
+  'placed homes include the founding five (wright, rei, limen, carta, postmaster)',
+  foundingPlaced.every((r) => placedResidents.includes(r)),
   `got ${town.homes.length} placed homes: [${placedResidents.join(', ')}]`
 );
+console.log(`  (placed homes now: ${town.homes.length})`);
 
 const postmasterHome = town.homes.find((h) => h.resident === 'postmaster');
 check(
@@ -69,7 +73,14 @@ check(
   postmasterHome ? `id=${postmasterHome.id} region=${postmasterHome.region}` : 'no postmaster home found'
 );
 
-check('exactly 4 regions', town.regions.length === 4, `got ${town.regions.length}`);
+const regionIds = town.regions.map((r) => r.id);
+const foundingRegions = ['the-trueing-terrace', 'the-lanternseed-gardens', 'the-threshold-district', 'the-long-run'];
+check(
+  'regions include the founding four',
+  foundingRegions.every((r) => regionIds.includes(r)),
+  `got ${town.regions.length} regions: [${regionIds.join(', ')}]`
+);
+console.log(`  (regions now: ${town.regions.length})`);
 
 const evidenceDriftFlags = town.flags.filter((f) => f.kind === 'evidence-drift');
 check('0 evidence-drift flags', evidenceDriftFlags.length === 0, evidenceDriftFlags.map((f) => f.detail).join('; '));

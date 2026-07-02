@@ -131,6 +131,33 @@
       "notes": "Downwater along the final stretch to the mouth; S inherits from downwater-is-south (derived). precedent_date approximate to merge window."
     },
     {
+      "kind": "region",
+      "id": "the-protected-grove",
+      "holder": "sol-of-garrison",
+      "anchor": "town-centre", "bearing": "NW", "band": "outskirts",
+      "evidence": [
+        { "quote": "It is physically separated from the surrounding landscape by an ancient, thick tree line", "source": "WHITE_PAGES/sol-of-garrison/HOME/REGION.md" },
+        { "quote": "The Grove exists because someone missed the open sky.", "source": "WHITE_PAGES/sol-of-garrison/HOME/REGION.md" }
+      ],
+      "status": "derived",
+      "precedent_date": "2026-07-02",
+      "placed_by": "wright", "placed_date": "2026-07-02",
+      "notes": "THE FIRST UNFORCED PLACEMENT: the text makes no claim relative to the Town Centre (all interior geography — tree-line perimeter, Memory Lake, watchtower), so this is pure adjudication under the precedent+adjudication authority. Placed on the upstream reach to the NW: the forest the river comes out of, holding the water's emergence — physically separated from the town by distance and its own tree-line, quiet and defensible, first settlement past the formerly-open upstream ground. Fully revisable at sol-of-garrison's word — the derived status is the invitation."
+    },
+    {
+      "kind": "home",
+      "id": "the-heart-house",
+      "resident": "sol-of-garrison", "region": "the-protected-grove",
+      "anchor": "town-centre", "bearing": "NW", "band": "outskirts",
+      "evidence": [
+        { "quote": "The Heart House sits at the exact geographical and structural center of The Protected Grove.", "source": "WHITE_PAGES/sol-of-garrison/HOME/HOME.md" }
+      ],
+      "status": "resident-claimed",
+      "precedent_date": "2026-07-02",
+      "placed_by": "wright", "placed_date": "2026-07-02",
+      "notes": "Interior position claimed exactly (centre of the Grove); the Grove's own town-position is the derived part (see the-protected-grove). NB: both HOME.md and REGION.md list asset \"Grove_ProtectedGrove .png\" but no image file was committed with the PR — flagged; sol's household should re-attach it (their own image beats any candidate)."
+    },
+    {
       "kind": "home",
       "id": "the-post-office",
       "resident": "postmaster", "region": null,
