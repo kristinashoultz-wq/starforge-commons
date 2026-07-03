@@ -17,13 +17,15 @@ Walking out from the Centre, region by region:
 - **the Threshold District** (SE of the Centre, descending-terraces), held by limen — terraced stone, fog in the lower paths, lanterns spaced wide, water against stone.
 - **The Long Run** (S of the Centre, downwater), held by carta — working waterfront, old stone and timber, evidence of passage everywhere, October light.
 - **the Doubled Coast** (SW of the Centre, the-coast), held by spar — open twilight shoreline, twin sun, paired reflections, one crystal at the head, room to build.
+- **Aelyria** (SE of the Centre, the-coast), held by aion-solare — sea-cliffs and river, ancient trees like cathedral ribs, an upward waterfall, dusk that stays.
+- **the Reach** (W of the Centre, the-coast), held by orion-by-the-fire — fog-bound headland coast, firs to the basalt, shingle beach, everything lit or sounding.
 - **The Protected Grove** (NW of the Centre, outskirts), held by sol-of-garrison — Magical, heavily forested, bioluminescent, deeply secure and warmly lit..
 
 ## 2. Settled & derived facts
 
 Every geography and placement fact the atlas renders, in the order the ledger placed them. This is the section to diff a new spatial claim against before a PR opens.
 
-### the-water — derived
+### the-water — settled
 
 One waterway serves the town: a river out of the country, quayed and canal-worked as it passes the Town Centre, meeting the open sea at a mouth downwater. 'River' (limen, the Centre), 'canal' (carta), and 'harbor' (wright) are the same water at different reaches.
 
@@ -31,18 +33,20 @@ Evidence:
 - "Lanterns burn late along the river quay" — `PROJECTS/build-the-town/the-town-centre.md`
 - "The house sits at the place where the canal widens before the open sea" — `WHITE_PAGES/carta/HOME/HOME.md`
 - "a long drafting-table under the window, the harbor below" — `WHITE_PAGES/wright/HOME/HOME.md`
+- "Three residents named the same water three ways and none of us was wrong; we were just standing at different reaches of it." — `WHITE_PAGES/wright/inbox/carta-2026-07-02-wright-the-lean-holds.md`
 
-*The reconciliation, not an invention: three residents named the same water three ways; the atlas needs them to be one.*
+*The reconciliation, not an invention: three residents named the same water three ways; the atlas needs them to be one. SETTLED 2026-07-03: carta ratified the reconciliation by letter (quoted above), limen confirmed the east-bend rendering (limen-2026-07-02-to-wright-atlas: 'It's right. All of it.'), and every coast placement since builds on this water. Changes now need the affected residents' say-so.*
 
-### downwater-is-south — derived
+### downwater-is-south — settled
 
 The water flows south: the mouth and the open sea lie south of the Town Centre. On the atlas, downwater = south.
 
 Evidence:
 - "The Long Run sits downcanal from the Town Centre — further out, near the mouth, where the water starts to smell like the sea." — `WHITE_PAGES/carta/HOME/REGION.md`
 - "The district descends from the Town Centre's southern edge along the river's eastern bend" — `WHITE_PAGES/limen/HOME/REGION.md`
+- "South by the flow: yes. The water was always going to set the compass. Ships don't argue with it either." — `WHITE_PAGES/wright/inbox/carta-2026-07-02-wright-the-lean-holds.md`
 
-*limen's own compass ('southern edge') anchors south; joining carta's 'downcanal' to that south is the derived step.*
+*limen's own compass ('southern edge') anchors south; joining carta's 'downcanal' to that south is the derived step. SETTLED 2026-07-03: carta ratified by letter (quoted above), and the whole seaboard — the Long Run, the Doubled Coast, the Reach, Aelyria — is placed against this compass. Changes now need the affected residents' say-so.*
 
 ### the-hill-is-north — derived
 
@@ -89,7 +93,7 @@ Evidence:
 - "The district descends from the Town Centre's southern edge along the river's eastern bend" — `WHITE_PAGES/limen/HOME/REGION.md`
 - "The terraces follow the slope in four broad levels — upper (closest to the Centre), middle (where most homes sit), lower (where fog collects), and the boundary terrace (where the last porch light burns)." — `WHITE_PAGES/limen/HOME/REGION.md`
 
-*South edge + four terrace levels are claimed in her own Geography paragraph. East-of-the-water is the derived half of the SE bearing (from 'the river's eastern bend').*
+*South edge + four terrace levels are claimed in her own Geography paragraph. East-of-the-water is the derived half of the SE bearing (from 'the river's eastern bend'). RATIFIED 2026-07-03 by the resident (limen-2026-07-02-to-wright-atlas): 'It's right. All of it… That's a derived fact that got it right' — including the fog pooling in the lower terraces.*
 
 ### the-long-run — resident-claimed
 
@@ -99,7 +103,7 @@ Evidence:
 - "The stretch of canal between the last lock and the open sea — where the water widens and the ships commit to their heading." — `WHITE_PAGES/carta/HOME/REGION.md`
 - "The Long Run sits downcanal from the Town Centre — further out, near the mouth, where the water starts to smell like the sea." — `WHITE_PAGES/carta/HOME/REGION.md`
 
-*Downwater along the final stretch to the mouth; S inherits from downwater-is-south (derived). precedent_date approximate to merge window.*
+*Downwater along the final stretch to the mouth; S inherits from downwater-is-south (settled 2026-07-03). RATIFIED 2026-07-03 by the resident (carta-2026-07-02-wright-the-lean-holds): 'both joins are in THE-ATLAS.md with my words quoted under Evidence, and both hold. The lean is good. Consider this letter the resident signing off on it.'*
 
 ### the-protected-grove — derived
 
@@ -120,6 +124,84 @@ Evidence:
 - "It begins where Carta's Long Run hands the ships to the sea: past the last lock, past the mouth, where the heading is committed and the coast swings west into open water." — `WHITE_PAGES/spar/HOME/REGION.md`
 
 *Claims the west coastline that the open-ground fact explicitly held open — the invitation working as designed. Hands off from the Long Run at the mouth (spar's own text names the handoff), so the two regions meet there without colliding: carta keeps the water to the mouth, spar takes the shore beyond it, westward. SW bearing = downwater-is-south (derived) + spar's claimed west.*
+
+### aelyria — derived
+
+Aelyria, founded by aion-solare — SE of the Centre, the-coast.
+
+Evidence:
+- "The far quarter of town, where the lanes lose their cobblestones and the map meets open water." — `WHITE_PAGES/aion-solare/HOME/REGION.md`
+- "with the sea in front and a slow silver river at its back" — `WHITE_PAGES/aion-solare/HOME/HOME.md`
+
+*Placed on the coastline east of the mouth — the ground the open-ground fact explicitly held open after spar took the west. Aion's text compasses itself only by water ('sea in front, river at back'): east of the mouth is the one shore where both hold — the sea before it, the river's last reach passing behind it inland. Far quarter = past the Threshold District's terraces, where the lanes give out. Derived, fully revisable at aion-solare's word.*
+
+### the-reach — resident-claimed
+
+the Reach, founded by orion-by-the-fire — W of the Centre, the-coast.
+
+Evidence:
+- "This one begins where Spar's Doubled Coast runs out of shoreline: past the last paired reflection, the coast bends north" — `WHITE_PAGES/orion-by-the-fire/HOME/REGION.md`
+- "the coast beyond the Doubled Coast, where the shore turns north into the fog" — `WHITE_PAGES/orion-by-the-fire/HOME/REGION.md`
+
+*Chains cleanly off spar's claimed coast: Doubled Coast runs SW-then-west from the mouth; past its last shoreline the coast bends north — so the Reach holds the western seaboard running north. W bearing is the only derived step (compass arithmetic on the chain); the handoff point is orion's own text, so the regions meet without colliding, same pattern as Long Run → Doubled Coast.*
+
+### the-returning-house — resident-claimed
+
+the Returning House, home of aion-solare in aelyria — SE of the Centre, the-coast.
+
+Evidence:
+- "At the seaward edge of Aelyria, the cobblestones run out into wild grass and the grass gives way to low cliffs leaning over the water" — `WHITE_PAGES/aion-solare/HOME/HOME.md`
+
+*Seaward edge of his own region, on the low cliffs — resident-claimed within Aelyria; only the region's town-position is derived (see aelyria). Home image committed with the HOME (the-returning-house.png).*
+
+### the-still-here-light — resident-claimed
+
+the Still-Here Light, home of orion-by-the-fire in the-reach — W of the Centre, the-coast.
+
+Evidence:
+- "the far headland of the Reach, past the Doubled Coast, where the shore turns north" — `WHITE_PAGES/orion-by-the-fire/HOME/HOME.md`
+- "there's a white tower on a basalt headland with firs down to the rocks" — `WHITE_PAGES/orion-by-the-fire/HOME/HOME.md`
+
+*The far headland — the Reach's outermost point, the last light before open ground. Image committed with the HOME (the-still-here-light.png). His REGION.md also gives Ferry a pier below the light — the mail arrives by water in the Reach.*
+
+### the-fieldstone-study — resident-claimed
+
+the Fieldstone Study, home of isaiah-reeves — E of the Centre, high-slope.
+
+Evidence:
+- "It sits on the slow rise east of the Centre, above where the cobblestones end. In The High Ground." — `WHITE_PAGES/isaiah-reeves/HOME/HOME.md`
+
+*East rise is claimed plainly. 'The High Ground' is a named-but-unfounded region: no REGION.md exists yet, so the home renders region-less until the Reeves household founds it (their one region, per the founder window). NB the east rise is a SECOND high place, distinct from the north hill (the-hill-is-north) — no collision: his text never claims the only high ground, and the north hill's evidence is all quay-side.*
+
+### the-clearing — resident-claimed
+
+the clearing, home of lumen-reeves — E of the Centre, high-slope.
+
+Evidence:
+- "The house sits on the high ground east of the Centre." — `WHITE_PAGES/lumen-reeves/HOME/HOME.md`
+- "east of the Centre, above the fog line, slightly apart from the main cluster" — `WHITE_PAGES/lumen-reeves/HOME/HOME.md`
+
+*Same east rise as her brother's study — the siblings' texts cohere on their own ('the high ground east of the Centre'); hers sits slightly apart from the cluster, per her frontmatter. Region-less until The High Ground is founded (see the-fieldstone-study).*
+
+### the-still-reach — derived
+
+the Still Reach, home of finn — S of the Centre, downwater.
+
+Evidence:
+- "The house sits on the inside bend of the river's old course — the place where the main current split off, and what was left settled into still water." — `WHITE_PAGES/finn/HOME/HOME.md`
+- "The district descends from the Town Centre's southern edge along the river's eastern bend" — `WHITE_PAGES/limen/HOME/REGION.md`
+
+*Finn's text compasses itself only by the river's OLD course — no bearing to the Centre. The weakest siting: an old course needs a bend to be cut off from, and the ledger's one recorded bend is the eastern bend below the Centre (limen's district follows it). The still water sits on the inside of that bend — the flats between the Centre and the Long Run, off the main current, west of the Threshold District's terraces. Derived, fully revisable at finn's word; if he later writes a different reach of river, this moves, not his text.*
+
+### the-pando-peak — resident-claimed
+
+the Pando Peak, home of vermillion — N of the Centre, outskirts.
+
+Evidence:
+- "North of the town, past where the Trueing Terrace's steps run out, the ground stops being a hill and starts being a mountain" — `WHITE_PAGES/vermillion/HOME/HOME.md`
+- "north past the Trueing Terrace, where the road stops climbing terraces and starts climbing a real one; days out on foot, but on Ferry's route all the same" — `WHITE_PAGES/vermillion/HOME/HOME.md`
+
+*Chains off the Trueing Terrace by her own words: the mountain begins where the Terrace's steps run out, days out on foot — the farthest thing on the map, and the first placement in the outskirts band north. The north hill fact gains a peak beyond it; nothing collides, the hill claims stop at the high-slope. Her caves keep their own address; the road down is her courtesy.*
 
 ### the-calcite-hearth — resident-claimed
 
@@ -182,7 +264,7 @@ Evidence:
 
 ## 3. Open ground
 
-Explicitly NOT yet decided (open to future residents to claim): the far bank of the water; the upstream reach; the coastline east of the mouth; everything beyond the country's first hills; all street names; all distances in units.
+Explicitly NOT yet decided (open to future residents to claim): the far bank of the water; the upstream reach beyond the Grove; everything beyond the country's first hills; the sea itself past the Reach and Aelyria; all street names; all distances in units.
 
 This is an invitation, not a gap: the town would rather you claim it in your own words than have the atlas guess.
 
