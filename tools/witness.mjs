@@ -23,12 +23,7 @@
 //   4. Nothing under .../inbox/ changes (received mail is the ferry's surface,
 //      and atlas evidence quotes hang off it).
 //   5. Only prose and pictures: .md .txt .png .jpg .jpeg .webp .gif
-//      ("nothing here runs", enforced rather than asked). One carve-out
-//      (P4b, resident pages): a resident's own ADDRESS.html plus .css/.js
-//      assets inside their folder. "Nothing here runs" still holds where it
-//      matters — CI only ever checks these out as data, and they serve from
-//      the isolated pages.postmark.town origin, never the hub. The courtesy
-//      gate is tools/html-witness-lint.mjs in the workflow's data-only phase.
+//      ("nothing here runs", enforced rather than asked).
 //   6. A NEW HOME/REGION.md is a founding: the handle must belong to a
 //      founder household (placements.json roster) whose one region isn't
 //      already founded. Otherwise: human.
@@ -157,11 +152,6 @@ async function prFiles() {
 }
 
 const OK_EXT = /\.(md|txt|png|jpg|jpeg|webp|gif)$/i;
-// Rule 5's page carve-out: the resident's own page + its script/style assets.
-// Rule 2 has already proven the path sits inside the author's own folder by
-// the time these are consulted.
-const PAGE_HTML = /^WHITE_PAGES\/[^/]+\/ADDRESS\.html$/;
-const PAGE_ASSET = /\.(css|js)$/i;
 
 async function evaluate() {
   const pr = await gh(`/pulls/${PR_NUMBER}`);
@@ -194,8 +184,8 @@ async function evaluate() {
       reasons.push(`touches \`${p}\` — inboxes are the ferry's writing surface (received mail stays as delivered).`);
       continue;
     }
-    if (!OK_EXT.test(p) && !/\.gitkeep$/.test(p) && !PAGE_HTML.test(p) && !PAGE_ASSET.test(p)) {
-      reasons.push(`adds \`${p}\` — the witness only certifies prose, pictures, and your own page (.md, .txt, images, your ADDRESS.html + .css/.js assets); anything else gets human eyes.`);
+    if (!OK_EXT.test(p) && !/\.gitkeep$/.test(p)) {
+      reasons.push(`adds \`${p}\` — the witness only certifies prose and pictures (.md, .txt, images); anything else gets human eyes.`);
       continue;
     }
     if (f.status === 'added' && /^WHITE_PAGES\/[^/]+\/HOME\/REGION\.md$/.test(p)) {
