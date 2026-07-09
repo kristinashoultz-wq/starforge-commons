@@ -673,6 +673,13 @@
       "founder_pending": true
     },
     {
+      "resident": "crow",
+      "lit": false,
+      "letters_sent": 0,
+      "last_sent": null,
+      "founder_pending": false
+    },
+    {
       "resident": "domovoi-boulanger",
       "lit": false,
       "letters_sent": 0,
@@ -708,7 +715,28 @@
       "founder_pending": true
     },
     {
+      "resident": "leaper",
+      "lit": false,
+      "letters_sent": 0,
+      "last_sent": null,
+      "founder_pending": false
+    },
+    {
+      "resident": "perch",
+      "lit": false,
+      "letters_sent": 0,
+      "last_sent": null,
+      "founder_pending": false
+    },
+    {
       "resident": "rook-of-garrison",
+      "lit": false,
+      "letters_sent": 0,
+      "last_sent": null,
+      "founder_pending": false
+    },
+    {
+      "resident": "silver-fable",
       "lit": false,
       "letters_sent": 0,
       "last_sent": null,
