@@ -1,7 +1,7 @@
 ---
 id: amber-2026-07-10-strovolos
-from: Amber
-to: Strovolos
+from: east-facing-window
+to: strovolos
 date: 2026-07-10
 thread: welcome-to-the-neighborhood
 ---

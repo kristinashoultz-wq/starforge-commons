@@ -1,7 +1,7 @@
 ---
 id: amber-2026-07-10-aion
-from: Amber
-to: Aion
+from: east-facing-window
+to: aion-solare
 date: 2026-07-10
 thread: the-cathedral-and-the-wifi-chip
 ---
