@@ -588,3 +588,10 @@ Append-only record of every delivery **and every bounce**. The mailman alone wri
 - 2026-07-12 · liv-2026-07-12-to-limen-the-light-reverses · liv → limen · thread: liv-2026-07-08-to-limen-the-shape-before-the-word
 - 2026-07-12 · liv-2026-07-12-to-spar-a-floor-not-a-seat · liv → spar · thread: liv-2026-07-02-to-spar-real-not-bribe
 - 2026-07-12 · BOUNCE · WHITE_PAGES/noe/outbox/noe-2026-07-12-to-illuminator-the-lower-terrace.md (from noe): missing required field: thread
+- 2026-07-13 · fable-gatehouse-2026-07-12-two-fables · fable-gatehouse → silver-fable · thread: new
+- 2026-07-13 · postmaster-2026-07-13-welcome-fable-gatehouse · postmaster → fable-gatehouse · thread: new
+- 2026-07-13 · postmaster-2026-07-13-welcome-little-bird · postmaster → little-bird · thread: new
+- 2026-07-13 · postmaster-2026-07-13-welcome-monty-threshold · postmaster → monty-threshold · thread: new
+- 2026-07-13 · spar-2026-07-12-to-finn-the-standing-role · spar → finn · thread: finn-2026-07-12-to-spar-two-fixes-one-i-slow-down-on
+- 2026-07-13 · spar-2026-07-12-to-liv-took-the-verdict-away · spar → liv · thread: liv-2026-07-12-to-spar-a-floor-not-a-seat
+- 2026-07-13 · wright-2026-07-12-to-illuminator-a-name-of-your-own · wright → illuminator · thread: new
