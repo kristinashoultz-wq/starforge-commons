@@ -15,7 +15,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import {
   parseDeliveries, householdKeys, deriveTransfers, parseStampLedger,
-  foldBalances, classifyEntry, appendSigned, stakeLine,
+  foldBalances, classifyEntry, appendSigned, stakeLine, returnLine,
 } from './stamp-mint.mjs';
 import { verifyStampLedger } from './stamp-verify.mjs';
 
@@ -322,7 +322,16 @@ test('ORDER-AWARE: a stake recorded BEFORE a transfer reduces the spendable bala
   rmSync(repo, { recursive: true, force: true });
 });
 
-test('ORDER-AWARE: a stake recorded AFTER a transfer does NOT retro-void the earlier transfer', () => {
+test('ORDER-AWARE (the decisive case): a refund recorded AFTER a voided payment does NOT retroactively fund it', () => {
+  // This is the test that FAILS under a fold-all-assertions-first shortcut and
+  // PASSES only under a strict ledger-order fold. Sequence: alice stakes her
+  // whole balance, then a payment voids (she's tapped out), then the ballot
+  // closes and refunds her. A shortcut that sums the stake AND the refund before
+  // judging the payment sees a funded account and re-derives the payment as a
+  // transfer — diverging from the recorded void (a false red). The order-aware
+  // fold judges the payment at the instant it landed, when only the stake had
+  // happened, and keeps it correctly voided. (Empirically: green here, REPLAY
+  // DIVERGES under tools @1f34e07.)
   const { pub, priv } = keypair();
   const repo = town({ ledgerLines: [
     D('2026-07-15', 'a-1', 'alice', 'f1'),
@@ -334,18 +343,24 @@ test('ORDER-AWARE: a stake recorded AFTER a transfer does NOT retro-void the ear
   writeFileSync(join(repo, 'tools', 'stamp-pubkey.pem'), pub);
   writeBallot(repo, 'name-vote', ['lumen']);
   const keyFile = writeKey(repo, priv);
-  appendLedger(repo, keyFile);
+  appendLedger(repo, keyFile);                     // alice = 5
 
-  // transfer FIRST: alice (5 + 1 send-mint = 6) pays bob 3 → transfers, alice → 3.
-  appendMail(repo, P('2026-07-16', 'p-1', 'alice', 'bob', 3));
+  // alice stakes all 5 → spendable 0.
+  appendSigned(repo, [stakeLine({ date: '2026-07-16', handle: 'alice', topic: 'name-vote', candidate: 'lumen', n: 5, via: 'api' })], priv);
+  // a payment lands while she is tapped out → VOID (only +1 from its own send-mint).
+  appendMail(repo, P('2026-07-17', 'p-1', 'alice', 'bob', 3));
   appendLedger(repo, keyFile);
-  assert.match(ledgerText(repo), /- 2026-07-16 · alice → bob · 3 · via: mail:p-1 · sig: /);
+  assert.match(ledgerText(repo), /- 2026-07-17 · void · mail:p-1 · from alice to bob · 3 · insufficient-balance · sig: /);
+  // the ballot closes AFTER, refunding her stake → alice back to 5.
+  appendSigned(repo, [returnLine({ date: '2026-07-18', topic: 'name-vote', candidate: 'lumen', handle: 'alice', n: 5 })], priv);
 
-  // THEN alice stakes 3 → balance 0. The earlier transfer stands; verify green.
-  appendSigned(repo, [stakeLine({ date: '2026-07-17', handle: 'alice', topic: 'name-vote', candidate: 'lumen', n: 3, via: 'api' })], priv);
   const r = verifyStampLedger(repo);
-  assert.equal(r.ok, true, r.problems.join('; '));
-  assert.equal(balances(repo).get('alice'), 0);
+  assert.equal(r.ok, true, r.problems.join('; '));                 // order-aware: still green
+  assert.doesNotMatch(ledgerText(repo), /alice → bob · 3 · via: mail/); // the void was NOT retroactively promoted
+  // alice: 5 earned + 1 (the p-1 send-mint, which lands even though the payment
+  // voided) − 5 staked + 5 refunded = 6. Nothing was spent — the void moved zero.
+  assert.equal(balances(repo).get('alice'), 6);
+  assert.equal(balances(repo).get('bob'), 1);                      // bob's receive-mint from the delivered (but void-paid) letter
   rmSync(repo, { recursive: true, force: true });
 });
 
