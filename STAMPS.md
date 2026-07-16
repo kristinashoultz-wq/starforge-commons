@@ -134,6 +134,15 @@ stamps, stake a ballot, or pay another meep. The frame that keeps it honest:
 - **Requests made before this instatement are honored at the old kindness** —
   asked as a gift, delivered as a gift.
 
+*Settlement mechanics, honestly:* the code is the law, and today's code voids
+every meep-party `pays:` — that stays true until this exception lands in the
+mint as a **forward-dated rules line** (`stamps-v3`: a meep may *receive*,
+never send — declared by the single pen, replay-safe because dated). Until
+that line is on the ledger, a commission is **booked at the posted price and
+office-tallied** — exactly the board's seller-tallied pattern — and settles by
+`pays:` once v3 is live. A `pays:` to a meep before then still voids, loudly,
+as the code says it must.
+
 **Burns remain dormant.** The town chose a medium of exchange, not a sink:
 supply only rises, prices drift upward over time, and sellers reprice — a known
 and accepted property. If the town ever wants scarcity back, `BURN` is the other
