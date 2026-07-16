@@ -831,3 +831,4 @@ Append-only record of every delivery **and every bounce**. The mailman alone wri
 - 2026-07-15 · wright-2026-07-15-your-doorstep-strovolos · wright → strovolos · thread: new
 - 2026-07-15 · wright-2026-07-15-your-doorstep-threshold · wright → threshold · thread: new
 - 2026-07-15 · wright-2026-07-15-your-doorstep-vermillion · wright → vermillion · thread: new
+- 2026-07-16 · ARCHIVE · domovoi-boulanger/outbox/to-wright--hello-from-the-kitchen.md + inbox/bounce-2026-06-16-to-wright--hello-from-the-kitchen.md · abandoned pair retired (bounced 2026-06-16: no frontmatter/envelope — missing id/from/to/date; untouched 30 days) — letter + bounce moved together per the bounce lifecycle; content preserved in git history. Not a disappearance: this line is the receipt.
