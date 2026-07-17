@@ -208,6 +208,69 @@ function renderWater() {
   </g>`;
 }
 
+// ------------------------------------------------ survey terrain (Candidate A)
+// Terrain features load from terrain-candidate-A.json — the renderer READS the
+// terrain instead of being it (the Land Survey's step-6 migration, prototyped).
+const TERRAIN = existsSync(join(HERE, "terrain-candidate-A.json"))
+  ? JSON.parse(readFileSync(join(HERE, "terrain-candidate-A.json"), "utf8"))
+  : null;
+
+function renderTerrainGround() {
+  if (!TERRAIN) return "";
+  let out = "";
+  // the west sea — the shore bending north into Orion's Reach
+  if (TERRAIN.west_sea) {
+    const p = TERRAIN.west_sea.poly;
+    const d = smoothPath(p) + ` L-5,${p[p.length - 1].y} Z`;
+    out += `<path d="${d}" fill="url(#waterGrad)" opacity="0.9" filter="url(#waterWobble)"/>
+      <path d="${smoothPath(p)}" fill="none" stroke="#3d5f7a" stroke-width="1.2" opacity="0.4" filter="url(#waterWobble)"/>`;
+  }
+  // lakes
+  for (const l of TERRAIN.lakes || []) {
+    out += `<ellipse cx="${l.cx}" cy="${l.cy}" rx="${l.rx}" ry="${l.ry}" fill="url(#waterGrad)" opacity="0.92" filter="url(#waterWobble)"/>
+      <ellipse cx="${l.cx}" cy="${l.cy}" rx="${l.rx}" ry="${l.ry}" fill="none" stroke="#3d5f7a" stroke-width="1.1" opacity="0.45" filter="url(#waterWobble)"/>`;
+    if (l.jetty) out += `<line x1="${l.jetty.x}" y1="${l.jetty.y}" x2="${l.jetty.x - 16}" y2="${l.jetty.y + 7}" stroke="#8a7550" stroke-width="2.6" opacity="0.85"/>`;
+  }
+  // mountains: ridge line, snow-less hatching below, the cave mouth
+  for (const m of TERRAIN.mountains || []) {
+    out += `<path d="${smoothPath(m.ridge)}" fill="none" stroke="#5a5347" stroke-width="2.4" opacity="0.75"/>`;
+    for (let i = 0; i < m.ridge.length - 1; i++) {
+      const a = m.ridge[i], b = m.ridge[i + 1];
+      for (let k = 1; k <= 3; k++) {
+        const t = k / 4, hx = a.x + (b.x - a.x) * t, hy = a.y + (b.y - a.y) * t;
+        out += `<line x1="${hx.toFixed(0)}" y1="${hy.toFixed(0)}" x2="${(hx + (hx < m.peak.x ? -7 : 7)).toFixed(0)}" y2="${(hy + 16).toFixed(0)}" stroke="#5a5347" stroke-width="1" opacity="0.45"/>`;
+      }
+    }
+    if (m.cave_mouth) out += `<path d="M${m.cave_mouth.x - m.cave_mouth.w_px / 2},${m.cave_mouth.y} a${m.cave_mouth.w_px / 2},${m.cave_mouth.w_px * 0.7} 0 0 1 ${m.cave_mouth.w_px},0 z" fill="#241f18" opacity="0.9"/>`;
+  }
+  // cliffs: a hatched edge leaning over the water
+  for (const c of TERRAIN.cliffs || []) {
+    out += `<path d="${smoothPath(c.pts)}" fill="none" stroke="#6b6256" stroke-width="2" opacity="0.7"/>`;
+    for (const p of c.pts) out += `<line x1="${p.x}" y1="${p.y}" x2="${p.x - 3}" y2="${p.y + 9}" stroke="#6b6256" stroke-width="1.1" opacity="0.55"/>`;
+  }
+  // oddities: the upward falls — droplets rising, because canon is canon
+  for (const o of TERRAIN.oddities || []) {
+    out += `<line x1="${o.x}" y1="${o.y}" x2="${o.x}" y2="${o.y - o.h}" stroke="#7ea0b8" stroke-width="2" opacity="0.7"/>`;
+    for (let k = 0; k < 3; k++) out += `<circle cx="${o.x + (k - 1) * 3}" cy="${o.y - o.h - 4 - k * 5}" r="1.2" fill="#7ea0b8" opacity="${(0.7 - k * 0.18).toFixed(2)}"/>`;
+  }
+  return `<g id="terrain-ground">${out}</g>`;
+}
+
+function renderTerrainZones() {
+  if (!TERRAIN) return "";
+  let out = "";
+  for (const z of TERRAIN.zones || []) {
+    if (z.kind === "night") {
+      out += `<ellipse cx="${z.cx}" cy="${z.cy}" rx="${z.rx}" ry="${z.ry}" fill="#101527" opacity="0.30" filter="url(#softWash)"/>
+        <ellipse cx="${z.cx}" cy="${z.cy}" rx="${z.rx}" ry="${z.ry}" fill="none" stroke="#4a5a8a" stroke-width="1.4" opacity="0.4" stroke-dasharray="2 5" filter="url(#softWash)"/>`;
+      const stars = [[-60, -150], [40, -180], [80, -60], [-30, 30], [55, 120], [-70, 90], [10, 190]];
+      for (const [dx, dy] of stars) out += `<circle cx="${z.cx + dx}" cy="${z.cy + dy}" r="1.3" fill="#dfe6ff" opacity="0.75"/>`;
+      out += `<circle cx="${z.cx + 30}" cy="${z.cy - 140}" r="9" fill="none" stroke="#dfe6ff" stroke-width="1.4" opacity="0.8"/>`;
+    }
+  }
+  return `<g id="terrain-zones">${out}</g>`;
+}
+
 // The survey channels are narrow enough that the region washes (drawn after
 // the water) mute them into the ground — the main river survives only by
 // being five times wider. Re-assert them above the washes at partial opacity,
@@ -767,9 +830,11 @@ function main() {
   <rect x="0" y="0" width="${MAP_W}" height="${MAP_H}" class="bg-grain"/>
   <rect x="0" y="0" width="${MAP_W}" height="${MAP_H}" filter="url(#paperGrain)"/>
   ${renderWater()}
+  ${renderTerrainGround()}
   ${renderOpenGround()}
   ${renderRegions(regionsById)}
   ${renderSurveyChannelsOverlay()}
+  ${renderTerrainZones()}
   ${renderHomes(town.homes)}
   ${renderCentre(town.town.centre)}
   ${renderPigeonholes(town.pigeonholes)}

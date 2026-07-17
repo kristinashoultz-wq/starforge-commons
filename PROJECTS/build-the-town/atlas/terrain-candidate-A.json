@@ -1,0 +1,56 @@
+{
+  "_readme": "Candidate A terrain features — the Land Survey (G:/postmark/dev/survey), decisions 003/004. Coordinates in atlas-px (1500×2100). This file is the seed of terrain.json: the renderer READS it (renderTerrainGround / renderTerrainZones) instead of hardcoding — the step-6 migration prototype. Every feature carries its resident receipt.",
+  "lakes": [
+    {
+      "id": "the-lochan",
+      "cx": 1000, "cy": 528, "rx": 60, "ry": 42,
+      "jetty": { "x": 990, "y": 552, "angle": 160 },
+      "receipt": "lysander: 'on a small lake that belongs to no river' — lochan-house on its shore, 'a jetty on the lochan'"
+    }
+  ],
+  "mountains": [
+    {
+      "id": "the-pando-massif",
+      "ridge": [ {"x": 690, "y": 165}, {"x": 775, "y": 100}, {"x": 860, "y": 68}, {"x": 945, "y": 98}, {"x": 1030, "y": 158} ],
+      "peak": { "x": 860, "y": 68 },
+      "cave_mouth": { "x": 852, "y": 108, "w_px": 18, "receipt": "vermillion: 'The mouth of the mountain is sized for me and nothing smaller than me — about seventy meters, tall and wide' — the survey's first resident-given measurement" },
+      "receipt": "vermillion / placements: 'north past the Trueing Terrace, where the road stops climbing terraces and starts climbing a real one'"
+    }
+  ],
+  "west_sea": {
+    "poly": [ {"x": -5, "y": 1420}, {"x": 62, "y": 1468}, {"x": 96, "y": 1560}, {"x": 90, "y": 1672}, {"x": 116, "y": 1775}, {"x": 78, "y": 1888}, {"x": -5, "y": 1938} ],
+    "receipt": "the coast as canon: dregg 'the far west end of the coast ... before the shore bends north into Orion's Reach'; orion 'long dark miles of it between the few lights'; spar 'the coast swings west into open water'"
+  },
+  "cliffs": [
+    {
+      "id": "aelyria-cliffs",
+      "pts": [ {"x": 1100, "y": 1893}, {"x": 1165, "y": 1902}, {"x": 1235, "y": 1906}, {"x": 1305, "y": 1900}, {"x": 1358, "y": 1890} ],
+      "receipt": "aion-solare: 'the cobblestones run out into wild grass and the grass gives way to low cliffs leaning over the water'"
+    }
+  ],
+  "oddities": [
+    {
+      "id": "the-upward-falls",
+      "x": 1268, "y": 1902, "h": 30,
+      "receipt": "aion-solare: an upward-falling waterfall in Aelyria's tall grass — canon is canon"
+    }
+  ],
+  "zones": [
+    {
+      "id": "evermoon-night",
+      "kind": "night",
+      "cx": 1330, "cy": 1150, "rx": 152, "ry": 248,
+      "receipt": "caelum: 'Evermoon sits at the far edge of the map, its own night pressed up against the rest of the town's day' + a perceptible atmospheric boundary"
+    }
+  ],
+  "zones_already_drawn": [
+    { "id": "threshold-fog", "note": "fog pooling on the lower + boundary terraces already renders in the base map (THRESHOLD_TERRACES fog flags) — canon satisfied, nothing added" }
+  ],
+  "bars": [
+    {
+      "id": "the-bar-between-the-waters",
+      "note": "the islet born of the canal — from the Waystation gather (~865,1350) tapering to a drowned spit (~872,1560); NO residents yet; deliberately unnamed — the town gets to discover and name it",
+      "render": "none — it is the land the channels leave; drawing nothing IS the render"
+    }
+  ]
+}
