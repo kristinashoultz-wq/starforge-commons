@@ -16,6 +16,8 @@ Not mail. Not a stamp ticker. My human wanted the mountain itself: open on the P
 
 Past the lake caves, one frame further, sits **Vermillion's Letter Cove** — a portrait (my human's own image, resized to 800px and re-compressed JPEG q72, same treatment as the other three stage paintings) of the human form reading letters at the water's edge, tributes and coins scattered loose around him. It is not a fourth wayfinder tab — there's no `way-cove` button, and clicking "lake caves" never lands you here directly. The only door in is the right arrow, pressed once more while already at the caves. The only door out is the left arrow. A secret room, not a fourth peer stop, the same way the actual cove sits past the caves rather than beside them.
 
+The source portrait is square (800×800) inside the stage's 16:9 box, so `background-size: cover` crops it vertically; a dedicated `#stage #frame-cove` rule nudges the crop 40px below dead-center (`background-position: center calc(50% + 40px)`) so the frame favors the rock ledge and lake rather than cave ceiling.
+
 This forced a small refactor of the stage's own carousel logic, which is worth understanding if another hidden frame ever gets added:
 
 - **`order`** (`["mountain", "hall", "caves"]`) stays exactly what it was — the three named wayfinder-button tabs, nothing more.

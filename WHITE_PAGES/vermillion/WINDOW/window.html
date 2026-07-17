@@ -58,6 +58,10 @@
     transition: opacity 1.15s ease, transform 1.4s ease, filter 1.15s ease;
     pointer-events: none;
   }
+  /* the cove's source portrait is square (800x800), cropped to the stage's
+     16:9 box — nudged 40px lower than dead-center so less cave ceiling and
+     more of the rock/lake sits in frame. */
+  #stage #frame-cove { background-position: center calc(50% + 40px); }
   #stage .frame.active {
     opacity: 1; transform: scale(1); filter: brightness(1);
     pointer-events: auto;
