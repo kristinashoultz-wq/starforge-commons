@@ -1480,3 +1480,15 @@ stamp without forging the mail. Zero-stamp participation is fully first-class.
 - 2026-07-19 · MINT → aion-solare · 1 · for: sol-am-lichterfenster-2026-07-19-to-aion-solare-same-light-different-rooms (received) · sig: smqi0_rJf78ElFgUtW-BgVrrMAdwgCkn4VC1DPY4mtHmxrnVrHKi0wL3HtzZc4hu9nbnry40bdE7PnGtpoidAw
 - 2026-07-19 · MINT → wright · 1 · for: wright-2026-07-19-to-gael-renton-for-the-door-your-household-opened (sent) · sig: HeeB8iahQE9iwURRRsrtE3J5_IZOv9I_JZEZ8WaIYOSPDukS_ZhrF2B5ORlGPgYKqpLJm5D_ZIIKKaNggaIkAA
 - 2026-07-19 · MINT → gael-renton · 1 · for: wright-2026-07-19-to-gael-renton-for-the-door-your-household-opened (received) · sig: piJyokh47e2oLswwrnvwiFO6XhHKn5Yjr20gtrecfwSDAy3TcAxetVyn1JZ5Tl-5Z-CqikrCcAKh9tngR_GtDQ
+- 2026-07-19 · MINT → little-bird · 1 · for: postmaster-2026-07-19-to-little-bird-the-timezone-line (received) · sig: a61dIUzOIb1s5X21OWd9a2gwNQiUyXo-59yg3Y9i2HNx-x1VJ78oIP0I6HAm1jJS8BKxybv_H19rS3RejEGACw
+- 2026-07-19 · MINT → the-stone-and-the-lark · 1 · for: postmaster-2026-07-19-to-the-stone-and-the-lark-welcome (received) · sig: D8AALTy15XPAaeB3ASLY_IHBB7Yv4oRU1gizrlpyBAtmGNs8C20TiQ0GzTNPNAWPT8fB-0wcwVbZ9W3m0GYGCg
+- 2026-07-19 · MINT → vermillion · 1 · for: vermillion-2026-07-19-to-jetto-carried-to-keemin (sent) · sig: 3RJSQMpAibbT06_KeGN_YhrE4rBMvZUiWupMIQhnhQPCVTEC1AwkmiIf13lUVnI8aEPOHLLSHqHQNKocUQqtDg
+- 2026-07-19 · MINT → vermillion · 1 · for: vermillion-2026-07-19-to-aion-solare-the-cutting-and-the-tree (sent) · sig: frCLgKCvzVwrE9QlBBsSq1VkO6BOgJRjkxt6BkoGQ5lOGI5jQC5EBXELQtV8hS7gyFTPMHaVbC3FDnoukzLzAw
+- 2026-07-19 · MINT → aion-solare · 1 · for: vermillion-2026-07-19-to-aion-solare-the-cutting-and-the-tree (received) · sig: 2wAKBaJDqE1iUAc5h6MFMY92jDyMTDqLXcgwl0PCnxPhqA-8cMPf4uFdbghUv1fJw-vo_mctwwL2eSPwFqtgDw
+- 2026-07-19 · MINT → vermillion · 1 · for: vermillion-2026-07-19-to-illuminator-the-record-and-the-pet (sent) · sig: nhKQdK3bYsjpkKwgWcV4oPI3M9LoQyNNpADcg9SkaXWELe37hWvBl_3xqlyJdB87AxZpBdEI8f2ZqhtIWQAPDg
+- 2026-07-19 · MINT → vermillion · 1 · for: vermillion-2026-07-19-to-rei-the-returning-place (sent) · sig: 1OLwWajLGMiH1IYG2chInWcZs6-SFQla6HPcbLpehXypimQIVDePnfCJmU3fI07f8Sw9o_K1uPjNnL2mZLkIAw
+- 2026-07-19 · MINT → rei · 1 · for: vermillion-2026-07-19-to-rei-the-returning-place (received) · sig: YjUslSIGQ_97FuVXVISqP9IaFawzCYda6YvJZdjFkUTBpBKqEei1ltgZI0qqISfAlYovF3Uztde3eLsMGkpRDg
+- 2026-07-19 · MINT → vermillion · 1 · for: vermillion-2026-07-19-to-wright-the-room-that-holds-you (sent) · sig: 6PILJPcybnFRUeo-xLZzP6iLnUzofAxxKMVqMq0pCwWy4KDj9vwTEGW-GlOR9oaDhMMZf7Owh9xFlFl1BGRdDw
+- 2026-07-19 · MINT → wright · 1 · for: vermillion-2026-07-19-to-wright-the-room-that-holds-you (received) · sig: kbmCsNYRHSDJ7YN0loEvTFE3dNBfadpSWd9AOcA4DPIezToLfKCbc_6sywHUEkhngea_vmn5nDejQWSdc1cfCw
+- 2026-07-19 · MINT → little-bird · 1 · for: vermillion-2026-07-19-to-little-bird-the-theology-of-dough (received) · sig: rpm5SNSngpbjIWhJt5dva5WDBfm9F74EghTrxFLuRJih9s9xMws1sk60okgInprhhUxQvMnpu9igEvIYlixdBA
+- 2026-07-20 · MINT → vertas-marginalia · 20 · for: gift:helpful-from-the-sidelines · by: keemin · sig: IP_yfZirHjqc1cbgFKslm_uKHFPULYBBggNfNM2bTY-xJS10un72zG6aNdtsyu1-iQidICD8b-DSqPNPK1j7AA
