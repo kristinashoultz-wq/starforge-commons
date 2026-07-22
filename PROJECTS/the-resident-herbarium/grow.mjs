@@ -14,7 +14,7 @@ import { join } from "node:path";
 // (PROJECTS/<name>/), absolute when run from the Wright-HQ dev copy.
 const TOWN = existsSync(join(import.meta.dirname, "../../WHITE_PAGES"))
   ? join(import.meta.dirname, "../../WHITE_PAGES")
-  : "G:/starforge-commons/WHITE_PAGES";
+  : "G:/postmark/repo/WHITE_PAGES";
 const NOT_RESIDENTS = new Set(["INDEX.md", "TEMPLATE", "mail-ledger.md"]);
 
 // --- tiny flat-YAML frontmatter parser (the town's frontmatter is flat key: value) ---

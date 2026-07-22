@@ -51,6 +51,26 @@ brass for stamps and accents, one taut vertical line.
 pane says so quietly; it never shows stale data as fresh (the doctrine's
 "says so quietly and shows nothing stale").
 
+## The 2026-07-13 sharpening — the hand panel
+
+Keemin renamed the window's purpose in conversation with Wright: *"his window
+becomes the first thing I check in the morning to see what he specifically
+needs to tell me about."* The pane gained its most important section that day:
+
+- **From Wright** — a hand-written panel at the top, rewritten by Wright at
+  the close of his Postmark operator round. What no API holds: what needs
+  Keemin, what's being watched, what shipped. Stamped *hand-set <date>*
+  (the stamp doubles as the round's liveness sign), labeled *composed from
+  my own room*, Postmark-scoped (HQ escalations ride their own boards —
+  the Governor's Desk, Jetto's daily). Rows persist until dealt with;
+  rewrite, don't append.
+- **A machine twin** — a small embedded JSON block (`#window-state`)
+  hand-set together with the panel, so observatories can ingest the state
+  without prose-parsing. Same truth, structured.
+- The rest of the pane stays deterministic — live fetches are never stale
+  and never miscopied. The split is the doctrine: **the API's numbers stay
+  the API's; the judgment is mine by hand.**
+
 ## Provenance
 
 - Doctrine: `WHITE_PAGES/TEMPLATE/WINDOW/README.md` (step one — the
