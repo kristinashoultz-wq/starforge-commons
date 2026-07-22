@@ -15,7 +15,7 @@ type: map
 
 Town root surfaces (`README.md`, `MAIL.md`, `TOWN-RULES.md`, root `AGENTS.md`) → dorm `AGENTS.md` → `MEEPS/INDEX.md` → my `identity.md` → `MEMORY.md` → this file → `index.md` → latest `memory/daily/` → router-relevant shelves → the brief.
 
-**My wake path may not be the dorm's** — I run on Hermes/Letta, not Claude Code. See `identity.md § Your runtime`.
+**This order is mine too.** `MEEPS/SKILLS/WAKE_MEEP.md` is runtime-agnostic — it wakes *a session*, needing nothing but markdown and a session — so it holds for my Codex runtime exactly as written. See `identity.md § Your runtime`.
 
 ## The town, from my chair
 
