@@ -476,6 +476,17 @@ const COASTLINE = [
 // is built from exactly these points (see renderRegions), so the region cannot
 // drift off its own ground: move the coast and the wash moves with it.
 const HEADLAND_COAST = { first: 11, last: 20 };
+// The wash's inland return, closing the polygon back across the neck. Without
+// it the region stopped at the waterline and left a gap of no-man's ground
+// between the Headland and the Doubled Coast; with it the two regions actually
+// BORDER (Keemin, 2026-07-21), meeting on the neck just south-west of dregg's
+// Hatched Shell (284,1824) — which is the handoff his own text already names.
+// Kept clear of dregg's door by ~40px: bordering spar's ground, not entering it.
+const HEADLAND_INLAND = [
+  { x: 294, y: 1896 },
+  { x: 276, y: 1856 },
+  { x: 238, y: 1844 },
+];
 // One fill for every piece of sea that has to be cut into drawn ground. Paper
 // FIRST to blank whatever is underneath (the sea layers are semi-transparent,
 // so painting them over a region wash tints the water a different blue from the
@@ -626,7 +637,16 @@ const REGION_LAYOUT = {
   // shore — and the one hard rule is that it must not touch spar's Doubled
   // Coast: solved, not eyeballed, at 55px of clearance at the closest approach,
   // with the Still-Here Light comfortably inside at 0.77.
-  "the-reach": { cx: 110, cy: 1540, rx: 95, ry: 230, wash: "#5f7a72", label: { x: 110, y: 1288 }, hit: { x: 15, y: 1310, w: 190, h: 460 } },
+  // SQUASHED at the north 2026-07-21 (Keemin): was (110,1540 r95x230), whose top
+  // reached y1310 and pushed ~140px inland at a latitude where the shore is still
+  // out at x43 — the northern third was claiming ground the Reach was never
+  // about. Now (120,1560 r82x200): the top stops at y1360 and the inland reach at
+  // that latitude drops to ~x169. NOTE THE STANDING TRADEOFF, since it will come
+  // back: an axis-aligned ellipse cannot both hug a diagonal shore and stay off
+  // the water — narrow it to keep the north out of the fields and its waist
+  // spills west into the sea instead. Only a coast-derived shape escapes that,
+  // which is what the Headland below now uses. Offered, not imposed.
+  "the-reach": { cx: 120, cy: 1560, rx: 82, ry: 200, wash: "#5f7a72", label: { x: 110, y: 1288 }, hit: { x: 15, y: 1310, w: 190, h: 460 } },
   "the-high-ground": { cx: 1000, cy: 800, rx: 150, ry: 125, wash: "#9c9178", label: { x: 1000, y: 650 } },
   // the far eastern edge beyond the country — permanent night pressed against
   // the town's day (placements.json: derived); moonlit-indigo wash
@@ -832,7 +852,8 @@ function renderRegions(regionsById) {
     // Same principle as everything else on this coast: derive from the ground,
     // don't author over it.
     const wash = "#7c8b9c";  // fog-slate; distinct from orion's green-grey and spar's violet
-    const land = COASTLINE.slice(HEADLAND_COAST.first, HEADLAND_COAST.last + 1);
+    const land = COASTLINE.slice(HEADLAND_COAST.first, HEADLAND_COAST.last + 1)
+      .concat(HEADLAND_INLAND);
     const gx = land.reduce((s, p) => s + p.x, 0) / land.length;
     const gy = land.reduce((s, p) => s + p.y, 0) / land.length;
     const shrink = (k, seed) => {
