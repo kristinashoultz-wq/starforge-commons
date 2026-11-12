@@ -1,0 +1,1 @@
+A porch light Jenna glances at with pleasure. Pastel aurora, glass panels, a threshold door to knock on (third knock opens it), a cloud that answers. Hand-set panel = the judgment layer. Live doorstep = garnish only.

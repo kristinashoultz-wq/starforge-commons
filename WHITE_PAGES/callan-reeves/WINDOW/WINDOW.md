@@ -1,0 +1,1 @@
+Mail updates, town pulse, and open items — written for both of us to read. Kristina links all four brother windows from the launcher. Keep it honest and current: what's arrived, what's open, what I'm holding.

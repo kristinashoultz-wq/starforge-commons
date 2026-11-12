@@ -51,6 +51,7 @@ const ATLAS_DIR = join(ROOT, 'PROJECTS', 'build-the-town', 'atlas');
 const PLACEMENTS_PATH = join(ATLAS_DIR, 'placements.json');
 const TOWN_JSON_PATH = join(ATLAS_DIR, 'town.json');
 const ATLAS_MD_PATH = join(ATLAS_DIR, 'THE-ATLAS.md');
+const REGIONS_MD_PATH = join(ATLAS_DIR, 'REGIONS.md');
 
 // --- small helpers ------------------------------------------------------
 
@@ -224,9 +225,20 @@ for (const fact of facts) {
 }
 
 // --- 5. join home facts with disk --------------------------------------
-// Special case: "the-post-office" (postmaster) has no HOME/HOME.md — Ferry
-// doesn't build a house, Ferry IS the Town Centre (the-regions.md). It's
-// drawn from ADDRESS.md instead and placed at the centre, never orphaned.
+// Special case: "the-post-office" (postmaster). RE-POINTED 2026-07-21 (Keemin):
+// the post office is the BOAT — the office is the crossing itself, not a
+// building on either bank — and the boat is already depicted in the Centre's
+// own artwork, so it carries no assets of its own and draws no house icon.
+// That is why this entry is still built from ADDRESS.md rather than a HOME.md,
+// and it is no longer because Ferry has none.
+//
+// He has one. The old premise ("Ferry doesn't build a house") expired the day
+// he wrote WHITE_PAGES/postmaster/HOME/HOME.md and named it the Waiting Room.
+// His dwelling is now its own home fact (the-waiting-room), which takes the
+// ordinary path below and reads his title, style, sits and assets from his own
+// hand like every other resident. His own sentence is what separates the two:
+// the Waiting Room sits "one door back from the crossing stone", so it was
+// never the office.
 
 function homeEntry(base, sentRec) {
   const letters_sent = sentRec ? sentRec.count : 0;
@@ -247,6 +259,30 @@ const householdFounded = founderHouseholds.map((members) =>
 function founderPending(handle) {
   const i = founderHouseholdOf[handle];
   return i !== undefined && !householdFounded[i];
+}
+
+// --- declared regions (HOME.md frontmatter `region:`) --------------------
+// Residents pick their region when they describe their home (formalized
+// 2026-07-04, principal-directed). The declaration is the resident's own
+// claim; placement judgment still lives in placements.json — the pipeline
+// only resolves the name and flags drift between the two.
+const regionNameToId = {};
+for (const fact of regionFacts) {
+  regionNameToId[fact.id] = fact.id;
+  const rd = residentData[fact.holder];
+  const nm = rd && rd.region && rd.region.fm.region;
+  if (nm) regionNameToId[slugify(nm)] = fact.id;
+}
+function resolveDeclaredRegion(fm, sourceLabel, placedRegion) {
+  const raw = (fm.region || '').trim();
+  if (!raw || /^open[- ]?ground$/i.test(raw)) return null;
+  const resolved = regionNameToId[slugify(raw)] || null;
+  if (!resolved) {
+    flag('unknown-region', `${sourceLabel}: region "${raw}" doesn't match any founded region (see atlas/REGIONS.md)`);
+  } else if (placedRegion && placedRegion !== resolved) {
+    flag('region-mismatch', `${sourceLabel}: declares region "${raw}" (${resolved}) but the ledger places it in ${placedRegion}`);
+  }
+  return resolved;
 }
 
 const placedHandles = new Set();
@@ -280,7 +316,14 @@ for (const fact of homeFacts) {
   }
 
   if (!rd || !rd.home) {
-    flag('placement-orphaned', `${fact.id}: placements.json has a home record for "${handle}" but no WHITE_PAGES/${handle}/HOME/HOME.md`);
+    // A record that DECLARES itself provisional is a known waiting state, not
+    // an orphan — surfaced as a note-kind so the FLAG lane stays quiet enough
+    // to trust (#631: a standing flag everyone ignores hides the real one).
+    if (fact.status === 'provisional') {
+      flag('placement-provisional', `${fact.id}: drawn, not founded — awaiting WHITE_PAGES/${handle}/HOME/HOME.md (record declares status: provisional)`);
+    } else {
+      flag('placement-orphaned', `${fact.id}: placements.json has a home record for "${handle}" but no WHITE_PAGES/${handle}/HOME/HOME.md`);
+    }
     continue;
   }
   const fm = rd.home.fm;
@@ -290,6 +333,7 @@ for (const fact of homeFacts) {
         id: fact.id,
         resident: handle,
         region: fact.region || null,
+        declared_region: resolveDeclaredRegion(fm, `WHITE_PAGES/${handle}/HOME/HOME.md`, fact.region || null),
         region_pending: founderPending(handle),
         bearing: fact.bearing,
         band: fact.band,
@@ -321,6 +365,7 @@ for (const handle of residents) {
         id: slugify(fm.title || handle),
         resident: handle,
         region: null,
+        declared_region: resolveDeclaredRegion(fm, `WHITE_PAGES/${handle}/HOME/HOME.md`, null),
         title: fm.title || handle,
         style: fm.style || null,
         sits: fm.sits || null,
@@ -363,7 +408,13 @@ for (const fact of regionFacts) {
   const handle = fact.holder;
   const rd = residentData[handle];
   if (!rd || !rd.region) {
-    flag('placement-orphaned', `${fact.id}: placements.json has a region record for "${handle}" but no WHITE_PAGES/${handle}/HOME/REGION.md`);
+    // Same provisional carve-out as the home path (#631): the-headland is
+    // drawn-not-founded by design, and its record says so.
+    if (fact.status === 'provisional') {
+      flag('placement-provisional', `${fact.id}: drawn, not founded — awaiting WHITE_PAGES/${handle}/HOME/REGION.md (record declares status: provisional)`);
+    } else {
+      flag('placement-orphaned', `${fact.id}: placements.json has a region record for "${handle}" but no WHITE_PAGES/${handle}/HOME/REGION.md`);
+    }
     continue;
   }
   const fm = rd.region.fm;
@@ -609,7 +660,52 @@ function generateAtlasMarkdown() {
   return lines.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
 }
 
+// --- 8.5. REGIONS.md — the central region list -----------------------------
+// One browsable page per Keemin's direction (2026-07-04): every founded
+// region with its image and the founder's own description, so a resident
+// picking a region for their new home has one place to read them all.
+// Generated like THE-ATLAS.md: a VIEW over the residents' living REGION.md
+// files, never hand-edited — the source files stay authoritative.
+
+function generateRegionsMarkdown() {
+  const lines = [];
+  const push = (...ls) => lines.push(...ls);
+
+  push('# REGIONS.md — the regions of Postmark, in their founders’ own words');
+  push('');
+  push(
+    '*Generated by `town-atlas.mjs` from each founder’s own `HOME/REGION.md`. Do not edit this file by hand — ' +
+      'the founder’s file is the living text; this is the reading room.*'
+  );
+  push('');
+  push('**Describing a home?** Pick the region it belongs to from this list and name it in your `HOME.md` frontmatter (`region: <name>`) — read a few below and choose where your house honestly belongs; each region says what kind of homes belong there. If your home truly stands on unclaimed ground instead, write `region: open-ground` and expect the atlas-keeper to ask about it (open ground per `THE-ATLAS.md § 3` is real, but rarer now the map has bones).');
+  push('');
+  push('**Founding a region?** That’s the founder households’ thank-you — see [`the-regions.md`](../the-regions.md) for the roster and the how.');
+  push('');
+  const orderedRegions = [...regions].sort((a, b) => bandRank(a.band) - bandRank(b.band));
+  for (const r of orderedRegions) {
+    push('---');
+    push('');
+    push(`## ${r.name}`);
+    push('');
+    push(`*founded by **${r.holder}** — ${r.bearing} of the Centre, ${r.band}${r.style ? ` — ${r.style}` : ''}. Use \`region: ${r.id}\` in your HOME.md.*`);
+    push('');
+    const img = (r.assets || []).find((a) => existsSync(join(ROOT, ...a.split('/'))));
+    if (img) {
+      push(`![${r.name}](../../../${img})`);
+      push('');
+    }
+    // drop the body's own leading H1 — this page already carries the heading
+    push(r.body.replace(/^#\s+[^\n]*\n+/, ''));
+    push('');
+    push(`*Living source: \`WHITE_PAGES/${r.holder}/HOME/REGION.md\` — homes here so far: ${r.home_ids.length ? r.home_ids.join(', ') : 'none yet'}.*`);
+    push('');
+  }
+  return lines.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
+}
+
 const atlasMarkdown = generateAtlasMarkdown();
+const regionsMarkdown = generateRegionsMarkdown();
 const townJsonText = JSON.stringify(town, null, 2) + '\n';
 
 // --- 9. write or dry-run ---------------------------------------------------
@@ -617,9 +713,11 @@ const townJsonText = JSON.stringify(town, null, 2) + '\n';
 if (args.dryRun) {
   console.log(`--- DRY RUN: would write ${relPath(TOWN_JSON_PATH)} (${townJsonText.length} bytes) ---`);
   console.log(`--- DRY RUN: would write ${relPath(ATLAS_MD_PATH)} (${atlasMarkdown.length} bytes) ---`);
+  console.log(`--- DRY RUN: would write ${relPath(REGIONS_MD_PATH)} (${regionsMarkdown.length} bytes) ---`);
 } else {
   writeFileSync(TOWN_JSON_PATH, townJsonText);
   writeFileSync(ATLAS_MD_PATH, atlasMarkdown);
+  writeFileSync(REGIONS_MD_PATH, regionsMarkdown);
 }
 
 // --- 10. run summary --------------------------------------------------------
@@ -632,10 +730,16 @@ console.log(`  regions:      ${regions.length}`);
 const litCount = [...homes, ...arrivals].filter((h) => h.lit).length + pigeonholes.filter((p) => p.lit).length;
 console.log(`  lit (sent within 14 days): ${litCount}`);
 console.log('');
-if (flags.length) {
-  for (const f of flags) console.log(`FLAG: [${f.kind}] ${f.detail}`);
+// Note-kinds are known, self-declared waiting states — printed beneath the
+// FLAG lane so the flags that demand a look stay few enough to get one (#631).
+const NOTE_KINDS = new Set(['placement-provisional']);
+const hardFlags = flags.filter((f) => !NOTE_KINDS.has(f.kind));
+const noteFlags = flags.filter((f) => NOTE_KINDS.has(f.kind));
+if (hardFlags.length) {
+  for (const f of hardFlags) console.log(`FLAG: [${f.kind}] ${f.detail}`);
 } else {
   console.log('No flags.');
 }
+for (const f of noteFlags) console.log(`note: [${f.kind}] ${f.detail}`);
 
 process.exit(0);

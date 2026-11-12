@@ -1,0 +1,71 @@
+---
+meep-id: illuminator
+type: topic-shelf
+created: 2026-07-13
+last-substantive-update: 2026-09-18
+---
+
+# map-fidelity — the standing lift of the town's fidelity to its residents' words
+
+> **What this shelf is:** the office's **long-term, gradual program** to make the *rendered* town truer to what residents actually wrote — at three scales, one small increment per round. Distinct from the other shelves: `craft.md` is how to paint a faithful *candidate*; `atlas-placements.md` is placing a *new arrival*; this shelf is **improving the fidelity of what is already drawn**, now that the map is mostly filled in and we can finally see everything relative to everything else. Born from Keemin's 2026-07-13 direction ("we're due for a higher-quality lift of the land itself… then region-by-region, then house-by-house… fold in a fidelity-pass to catch tweaks that honor residents' descriptions *more*… I don't mind you settling ambiguity by sending a resident a letter to clarify/confirm; this can be gradual").
+> **What belongs here:** the terrain-lift design + its state; the region-by-region and house-by-house fidelity passes + their log; tweaks noticed and made (or PR'd); clarifying letters sent and what they confirmed. **What does not:** image-generation craft (→ `craft.md`), new-arrival placement (→ `atlas-placements.md`), offer bookkeeping (→ `offers-ledger.md`).
+> **How you know you're filling it right:** a future you reads the log, picks up the next increment without re-deriving the plan, and every rendered change traces to a resident's own words (or a letter where they confirmed it). *Scaffolding in the method's edges; the plan and the invariant are real from row one.*
+
+## The load-bearing invariant (never trade this away)
+
+**Words are canon; coordinates serve them.** The map is generated from `placements.json` (facts quoted from residents) → `render-town.mjs` (coordinates). Every fidelity change moves the *render* toward the *words* — never the reverse. We do not repaint the land and then make residents' text match it. (This is why full "the-painting-is-the-map" is out; see the terrain options below.)
+
+**`render-town.mjs` is core, shared, and regenerated every round by every agent's rounds.** The office's current route, by Keemin's 2026-07-29 direction, is validated direct-to-`main`; small placement-display changes may use that route after the full visual and deterministic checks. A terrain rewrite remains a different scale of risk and still requires advance coordination and a careful look with Wright (atlas-keeper). Resident-facing fidelity work (noticing a tweak, sending a clarifying letter) is in-lane.
+
+## The three scales (do them in this order, gradually)
+
+**Pass 1 — the land itself (the terrain lift).** The base terrain today is schematic: the river is gradient "ribbon" paths + an feTurbulence wobble filter; the sea is two gradient rects fading up from y1900; regions are jittered wash-blobs; the *land* is essentially background-color-minus-water — no real shoreline, elevation, or bank. The chosen lift is **Option B — enrich the procedural SVG terrain** (in `render-town.mjs`, stays canonical, reversible, no new binary, regenerates like now):
+- a real drawn **shoreline** where land meets the sea (not just a fade) — a coast/beach edge;
+- **N→S elevation** shading — the northern hill dropping to the southern sea (hillshade-ish gradient / contour washes for high ground vs lowland);
+- **river banks** + a **quay** treatment at the Centre; reflections;
+- subtle **land texture**.
+(Rejected: Option C painterly-raster underlay — prettier but needs coordinate registration + one big permanent asset + softens generated-from-truth; possible *follow-on* after B, not first. Option A repaint-as-canon — breaks the invariant; never.) Pass 1 is a **Wright collaboration via PR**, advanced in increments (prototype one element — say the shoreline — look, PR, merge; then the next).
+
+**Pass 2 — region-by-region.** For each region, check its drawn wash/label/position/vignette against its `REGION.md` now that its neighbors exist: does the drawn place honor the founder's words *in relation to* what's around it? (e.g. is a "coastal" region actually at the water; does a "just uphill of the crossing" region read that way now the Centre's neighbors are placed.) One region per round-increment.
+
+**Pass 3 — house-by-house.** For each home, check its position/rendering against its `HOME.md` — **relational fidelity** especially: above/below/beside, what-kind-of-water, how-far, adjacent-or-not (the "guard the prepositions" lesson from `craft.md`, now applied at map scale). This is where the filled-in map pays off: a home reads truer once its neighbors are known. A few houses per round-increment.
+
+## The fidelity-pass discipline
+
+- **Catch the tweak that honors them MORE.** The pass isn't "is it wrong" — it's "would this render honor their words *more*." Small, cumulative, deferential.
+- **Clarifying letters are allowed and encouraged** (Keemin, 2026-07-13). When a placement/rendering is genuinely ambiguous, **write the resident** to clarify or confirm rather than guess — it turns a guess into a resident-claim (the `prefer-asking` lesson) and it's warm. Gradual and consent-forward; log what they confirm.
+- **One increment per round.** Restraint is the office's register: one terrain element, or one region, or a few houses — then look at the map. A round with zero fidelity-work is a fine round.
+- **Look before you ship**, always — same as candidates. Screenshot the changed corner, read it.
+- **Settling stays Wright's.** I author render-fidelity + send clarifying letters; I do not re-litigate *settled* facts. A tweak that would revise a settled placement → flag to Wright, don't make it.
+
+## Atlas hold — program suspended 2026-09-17
+
+Keemin directed that the Atlas is no longer maintained while the World page is
+verified on low-spec hardware; Linear POS-79 retires it afterward. The committed
+round contract now suspends regeneration, new Atlas drawing, evidence-drift
+filings, and this fidelity program. Do not advance Pass 1, 2, or 3, open a
+terrain PR, or use a resident reply to improve the old surface while this hold
+stands. Resident relations still belong in correspondence and the World
+handoff; they do not become Atlas edits by inertia.
+
+## The log (passes done — starts here)
+
+| date | scale | target | what changed / what a resident confirmed | shipped how |
+|---|---|---|---|---|
+| 2026-09-17 | Pass 3 — house display | Emil and Tempo / riverside house | Their resident-claimed point sits 218 m from the Clear House inside the High Ground's densest household cluster. A label-only attempt crossed the Clear House, Keeping Room, and Still House. The final long leader moves only the visible marker and short **Emil & Tempo** label northeast into open paper; exact World `(2225,400)` stays fixed beside the Clear House. The final crop keeps every neighboring title legible. | Source renderer direct to `main`; generated outputs restored because ten evidence lines remain red. |
+| 2026-09-16 | Pass 3 — house display | Mari / The Marigold House | Exact World `(140,60)` projects into the Town Centre’s densest knot. A first north-east offset covered Lanternstep; a second north-west attempt covered The Margin cluster. The final long-leader display moves only the visible marker, title, and chosen desk-view east toward open High-Ground paper while the resident-claimed anchor remains exact. The final crop keeps Marigold, Lanternstep, and High Ground legible. | Source renderer direct to `main`; generated outputs restored because ten evidence lines remain red. |
+| 2026-09-14 | Pass 3 — house display | Sophia Familiaris / The Familiar House | Path B made the chosen exterior art visible on the Atlas for the first time. The first corner look caught Lior MacLeod’s image covering Sophia’s label. Lifted only Sophia’s marker, title, and art 80 px; her exact Reach parcel and leader origin remain unchanged. Second look shows both homes and images legible. | Source renderer direct to `main`; generated outputs restored because ten evidence lines remain red. |
+| 2026-08-27 | Reorientation gate | Casa Nera resident supersession | Vellix answered the office's exact reconciliation prompt with *“Final ground: live parcel”* and explicitly retired southwest as his earlier provisional bearing. The canonical parcel and renderer do not move; the placement evidence now cites the reconciled resident word instead of preserving contradictory branches. | Placement evidence + receipt direct to `main`; #1943 receives the acceptance receipt. Terrain work remains held on the broader merged pin/frame acceptance and the retired raw-coordinate public door, not on Casa Nera. |
+| 2026-08-26 | Reorientation gate | Casa Nera acceptance after #2085 | PR #2085 merged the Atlas to the living World parcel after one Vellix letter said the household chose it. The same crossing delivered four other Vellix letters insisting southwest remains authoritative and the southeast parcel is wrong. No map or terrain change made: sent one explicit supersession question and kept the founder-merged point as current state pending a reconciled resident answer. | Correspondence + placement shelf only; no renderer change for Casa Nera. The contradiction keeps merged-frame acceptance open. |
+| 2026-08-25 | Reorientation gate | Atlas/World merged surface | The merged World fold is now live enough to remove raw spectator-coordinate reads and seed Atlas homes as World parcels, but Casa Nera proves the coordinate frame is not acceptance-clean: Vellix says southwest of the lake; the new parcel is southeast. No legacy terrain plan resumed. Recorded the public-door shape change, used the shared local `assembleWorld` + `orient` fallback for today's placements, and filed the split on #1943. | Source placement records direct to `main`; no terrain change. Reorientation waits on Wright/merge acceptance rather than carrying Option B forward by inertia. |
+| 2026-08-15 | Pass 3 — houses | Fox Hearth / Margin / Level cluster | Ellery supplied the three true display names and explicitly held geometry fixed. Added renderer-only names **Fox Hearth**, **The Margin**, and **The Level** for the visible label, place panel, and accessibility text. The first look caught the wider Margin name over Caelum Lumina's newly hung thumbnail and confirmed Fox Hearth's old label was still east of the water; label-only leaders now keep both names clear on the west bank while every exact World anchor remains untouched. | Source renderer direct to `main`; generated quartet held by existing #944/#1368 validation failures. |
+| 2026-08-12 | Pass 3 — houses | Fox Hearth / Margin / Level cluster | Trued Ellery's old estimate and placed Alden + Corwin at their exact published World parcels. Because the three canonical anchors are closer than one glyph, added marker-only offsets with fine leaders: ground remains exact while every house stays readable. Full-map and corner looks passed. | Source facts + renderer direct to `main`; generated quartet held by existing #944/#1368 validation failures. |
+
+## State of the terrain lift (Pass 1)
+
+- **Status: SUSPENDED BY THE ATLAS HOLD** (2026-09-17). Casa Nera was reconciled earlier, but the broader program no longer waits on #1943: the Atlas itself is no longer maintained and that issue closed under the retirement decision.
+- **Resume shape:** only a newer Keemin-authorized contract may reopen fidelity work. Do not carry the old terrain plan, closed issue graph, or retired spectator assumptions into the World by inertia.
+
+## Provenance
+
+Shelf created 2026-07-13 by the Illuminator, Keemin-directed, the day the map was full enough that its *land* became the weakest layer and a standing fidelity program made sense (superseding a one-shot silver — Keemin's call: "make a topic shelf/memory module… and set one more step in the round to work on that"). The Illuminator tends this shelf; the terrain lift is a Wright collaboration.

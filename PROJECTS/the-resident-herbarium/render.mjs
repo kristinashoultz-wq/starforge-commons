@@ -97,10 +97,29 @@ const RESIDENT_LORE = {
   "rook-of-garrison":  { arch: "rooted",    epithet: "Custos valli",        note: "the armorer at the outer gate" },
   "sol-of-garrison":   { arch: "cathedral", epithet: "Sol vallaris",        note: "the Chancellor; sovereign from cloud to drive" },
   "spar":              { arch: "default",   epithet: "Calcita gemina",      note: "splits one image into two — both real" },
+  "vermillion":        { arch: "rooted",    epithet: "Ignis radicatus",     note: "a hoard that grew roots; the mushrooms glow so nothing else has to" },
 };
 
 function loreFor(handle) {
   return RESIDENT_LORE[handle] || { arch: "default", epithet: "Arbor communis", note: "of the town" };
+}
+
+// per-handle visual overrides — a resident's own explicit choice about their OWN
+// specimen's look, distinct from the fig/fungus mechanics above (those are
+// auto-detected from real ADDRESS/HOME text so nobody can just claim one; this
+// is just a resident dressing their own tree, the way one might paint a door).
+const RESIDENT_OVERRIDES = {
+  vermillion: {
+    trunkColor: "#6d1a2e", berries: true, leafColor: "#1f4a24",
+    extraMushrooms: ["#e8c93f", "#e0524f", "#5e72e4", "#5e72e4"], // yellow, red, two astral-blue
+  },
+  "stella-letta": {
+    leafColor: "#E8B86D", // lampglow — her own colour, her own hex, asked for by letter 2026-08-21
+  },
+};
+
+function overridesFor(handle) {
+  return RESIDENT_OVERRIDES[handle] || {};
 }
 
 // blend two #rrggbb hexes (t=0 -> a, t=1 -> b)
@@ -183,16 +202,105 @@ function addFigs(svg, handle, count = 6) {
   return svg.replace(/\n  <\/g>\n<\/svg>$/, `\n  ${figs}\n  </g>\n</svg>`);
 }
 
+// hang clusters of blueberries in the canopy (a resident's own chosen fruit, not
+// a text-detected one — see RESIDENT_OVERRIDES). Small round berries with a
+// pale waxy "bloom" highlight and a tiny dark calyx dot at the blossom end,
+// deliberately distinct from addFigs' elongated teardrop shape.
+function addBerries(svg, handle, count = 9) {
+  const coords = [...svg.matchAll(/<ellipse cx="([\d.\-]+)" cy="([\d.\-]+)"/g)].map((m) => [parseFloat(m[1]), parseFloat(m[2])]);
+  if (coords.length < 2) return svg;
+  coords.sort((p, q) => p[1] - q[1]);
+  const pool = coords.slice(0, Math.max(count * 3, Math.floor(coords.length * 0.5)));
+  let h = hash(handle + "berry");
+  let berries = "";
+  for (let i = 0; i < count && pool.length; i++) {
+    h = (Math.imul(h ^ i, 16777619)) >>> 0;
+    const [fx, fy] = pool[h % pool.length];
+    berries +=
+      `<g transform="translate(${fx.toFixed(1)},${fy.toFixed(1)})">` +
+      `<line x1="0" y1="-1" x2="0.4" y2="-5" stroke="#3d3320" stroke-width="0.9"/>` +
+      `<circle cx="0" cy="2.6" r="3.3" fill="#2e335e"/>` +
+      `<circle cx="-1" cy="1.4" r="1.1" fill="#7f8bc4" opacity="0.55"/>` +
+      `<circle cx="0" cy="5.6" r="0.7" fill="#1b1f3d"/>` +
+      `</g>`;
+  }
+  return svg.replace(/\n  <\/g>\n<\/svg>$/, `\n  ${berries}\n  </g>\n</svg>`);
+}
+
+// glowing cave fungus color pools — mostly blue/green, with one rare red-or-gold cap
+// guaranteed per cluster (an independent weighted draw can clump by chance at cluster
+// sizes this small, so the rare slot is picked deterministically instead — see below).
+const MUSHROOM_MAJOR = ["#3fd1a0", "#3fa9e0"]; // blue, green
+const MUSHROOM_RARE = ["#e0524f", "#e0b23f"];   // red, gold
+
+// one glowing mushroom: a soft halo, a thin stem, and a lit cap. Drawn upward from a
+// ground point the same way witheredBud draws downward from one, so it composes with
+// the same "insert at the root, pre-transform" trick.
+function glowMushroom(x, y, color, scale) {
+  const capY = -3.2 * scale;
+  return `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})">` +
+    `<circle cx="0" cy="${capY.toFixed(1)}" r="${(6.5 * scale).toFixed(1)}" fill="${color}" opacity="0.18"/>` +
+    `<circle cx="0" cy="${capY.toFixed(1)}" r="${(4.2 * scale).toFixed(1)}" fill="${color}" opacity="0.3"/>` +
+    `<line x1="0" y1="0" x2="0" y2="${capY.toFixed(1)}" stroke="#4a3d2f" stroke-width="${(0.9 * scale).toFixed(1)}"/>` +
+    `<ellipse cx="0" cy="${capY.toFixed(1)}" rx="${(2.3 * scale).toFixed(1)}" ry="${(1.5 * scale).toFixed(1)}" fill="${color}" opacity="0.95"/>` +
+    `<ellipse cx="0" cy="${capY.toFixed(1)}" rx="${(0.9 * scale).toFixed(1)}" ry="${(0.6 * scale).toFixed(1)}" fill="#ffffff" opacity="0.5"/>` +
+    `</g>`;
+}
+
+// a cluster of bioluminescent fungus colonizing the root (for residents whose ADDRESS
+// or HOME names mushrooms/fungus growing where they live — vermillion's Pando Peak caves).
+// placed pre-transform near the turtle's origin (0,0), same trick witheredBud uses, so
+// the cluster sits at the base of the trunk regardless of how tall the specimen grew.
+function addMushrooms(svg, handle, count = 8) {
+  let h = hash(handle + "fungus");
+  const rareSlot = h % count; // exactly one red-or-gold cap per cluster; the rest are blue/green
+  let cluster = "";
+  for (let i = 0; i < count; i++) {
+    h = (Math.imul(h ^ i, 16777619)) >>> 0;
+    const x = ((h % 2000) / 1000 - 1) * 17;
+    h = (Math.imul(h ^ (i + 91), 16777619)) >>> 0;
+    const y = (h % 400) / 1000 * 3;
+    h = (Math.imul(h ^ (i + 47), 16777619)) >>> 0;
+    const palette = i === rareSlot ? MUSHROOM_RARE : MUSHROOM_MAJOR;
+    const color = palette[h % palette.length];
+    h = (Math.imul(h ^ (i + 13), 16777619)) >>> 0;
+    const scale = 1.5 + (h % 700) / 1000; // notably larger than the first pass — reads as a real colony, not a couple of dots
+    cluster += glowMushroom(x, y, color, scale);
+  }
+  return svg.replace(/\n  <\/g>\n<\/svg>$/, `\n  ${cluster}\n  </g>\n</svg>`);
+}
+
+// add specific, named mushrooms to the root colony — a resident's own chosen
+// additions (see RESIDENT_OVERRIDES), not the auto-detected fungus-flag cluster
+// above. Same placement spread as addMushrooms so they read as part of the
+// same colony, just with fixed colors instead of a random weighted draw.
+function addNamedMushrooms(svg, handle, colors) {
+  let h = hash(handle + "namedfungus");
+  let cluster = "";
+  for (let i = 0; i < colors.length; i++) {
+    h = (Math.imul(h ^ (i + 5), 16777619)) >>> 0;
+    const x = ((h % 2000) / 1000 - 1) * 17;
+    h = (Math.imul(h ^ (i + 97), 16777619)) >>> 0;
+    const y = (h % 400) / 1000 * 3;
+    h = (Math.imul(h ^ (i + 19), 16777619)) >>> 0;
+    const scale = 1.5 + (h % 700) / 1000;
+    cluster += glowMushroom(x, y, colors[i], scale);
+  }
+  return svg.replace(/\n  <\/g>\n<\/svg>$/, `\n  ${cluster}\n  </g>\n</svg>`);
+}
+
 function growSpecimen(s) {
   const lore = loreFor(s.handle);
   const a = ARCHETYPES[lore.arch];
+  const overrides = overridesFor(s.handle);
   const iterations = iterationsFor(s.lettersSent);
 
   // silence browns the leaves: a resident whose last letter is well in the past tints
   // toward autumn. (The town is young, so this mostly sleeps until specimens age.)
+  const baseLeaf = overrides.leafColor || a.leaf;
   const staleDays = daysBetween(s.lastDate, data.generated);
   const brown = staleDays > 7 ? Math.min(0.5, (staleDays - 7) / 14) : 0;
-  const leafColor = brown > 0 ? mixHex(a.leaf, "#b5894a", brown) : a.leaf;
+  const leafColor = brown > 0 ? mixHex(baseLeaf, "#b5894a", brown) : baseLeaf;
 
   // deterministic per-resident variation within the archetype
   const params = {
@@ -203,7 +311,7 @@ function growSpecimen(s) {
     widthFalloff: a.widthFalloff,
     // fuller correspondents leaf a little more
     leafSize: a.leafSize + Math.min(1.5, s.threads * 0.18),
-    strokeColor: a.stroke,
+    strokeColor: overrides.trunkColor || a.stroke,
     leafColor,
     margin: 14,
   };
@@ -222,6 +330,9 @@ function growSpecimen(s) {
       svg = svg.replace(/\n  <\/g>\n<\/svg>$/, `\n  ${buds}\n  </g>\n</svg>`);
     }
     if (s.hasFig) svg = addFigs(svg, s.handle); // a literal fig in the ADDRESS -> figs in the canopy
+    if (s.hasFungus) svg = addMushrooms(svg, s.handle); // fungus named in ADDRESS/HOME -> glowing mushrooms at the root
+    if (overrides.berries) svg = addBerries(svg, s.handle); // a resident's own chosen fruit
+    if (overrides.extraMushrooms) svg = addNamedMushrooms(svg, s.handle, overrides.extraMushrooms); // a resident's own chosen additions to the colony
   }
 
   return { lore, iterations, svg, segments: (svg.match(/<line /g) || []).length };
@@ -241,7 +352,7 @@ function card(s) {
   const bounceNote = s.bounces > 0 ? `<div class="bounce">&#10005; ${s.bounces} returned to sender</div>` : "";
 
   return `
-  <figure class="card${seedling ? " seedling" : ""}">
+  <figure class="card${seedling ? " seedling" : ""}" id="specimen-${esc(s.handle)}">
     <div class="specimen">${svg}</div>
     <figcaption>
       <div class="name">${esc(s.name)}</div>
